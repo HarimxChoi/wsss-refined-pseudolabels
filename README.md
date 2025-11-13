@@ -1,6 +1,16 @@
-# Refined Pseudo-Label Learning for Weakly-Supervised Semantic Segmentation
+# Refined Pseudo-Label Learning for WSSS
 
-Enhanced self-training framework for WSSS achieving state-of-the-art results on COCO dataset.
+![Status](https://img.shields.io/badge/status-research-blue)
+![Code](https://img.shields.io/badge/code-proprietary-red)
+![mIoU](https://img.shields.io/badge/COCO--mIoU-56.3%25-brightgreen)
+![Documentation](https://img.shields.io/badge/docs-high--level-yellow)
+
+> **Note:** This repository contains high-level documentation and results. 
+> Detailed implementation is proprietary.
+
+Enhanced self-training framework for WSSS achieving state-of-the-art 
+results on COCO dataset.
+---
 
 ## Overview
 
