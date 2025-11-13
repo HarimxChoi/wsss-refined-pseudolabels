@@ -1,0 +1,29 @@
+ViT-B/16 Training Summary
+=========================
+
+Dataset: COCO train2014
+Backbone: CLIP ViT-B/16 + DINO (frozen)
+Training iterations: 80,000
+Input resolution: 320x320
+Batch size: 8
+
+Performance Progression:
+------------------------
+
+Iteration 60,000:
+  Validation mIoU: 51.92%
+  Training accuracy: 70.1%
+  Loss convergence: stable
+  
+Iteration 70,000:
+  Validation mIoU: 52.93%
+  Training accuracy: 77.9%
+  Quality improvement: significant
+  
+Iteration 80,000 (Final):
+  Validation mIoU: 53.07%
+  Training accuracy: 79.0%
+  Model convergence: achieved
+
+Final Test Performance:
+  COCO val2017: 53.39% mIoU
