@@ -10,7 +10,6 @@
 
 Enhanced self-training framework for WSSS achieving state-of-the-art 
 results on COCO dataset.
----
 
 ## Overview
 
