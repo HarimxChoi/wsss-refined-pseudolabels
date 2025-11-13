@@ -77,7 +77,7 @@ Configuration maintained.
 - Frozen vision encoder: CLIP ViT + DINOv2
 - Lightweight decoder: 3-layer transformer
 - Refinement module: Progressive pseudo-label optimization
-- Loss functions: CE + Dice + Boundary + Affinity + Boundary refinement
+- Loss functions: CE + Dice + Boundary + Affinity
 
 **Code Availability:**
 
