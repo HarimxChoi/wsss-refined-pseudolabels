@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-research-blue)
 ![Code](https://img.shields.io/badge/code-proprietary-red)
-![mIoU](https://img.shields.io/badge/COCO--mIoU-56.3%25-brightgreen)
+![mIoU](https://img.shields.io/badge/COCO--mIoU-56.2%25-brightgreen)
 ![Documentation](https://img.shields.io/badge/docs-high--level-yellow)
 
 > **Note:** This repository contains high-level documentation and results. 
