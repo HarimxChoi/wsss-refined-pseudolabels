@@ -48,7 +48,7 @@ See [docs/METHOD.md](docs/METHOD.md) for technical details.
 - Total iterations: 80,000
 - Base learning rate: 2e-5
 
-Configuration available in `configs/training_config.yaml`
+Configuration available in `[configs/training_config.yaml](configs/training_config.yaml)`
 
 ## Results Summary
 
