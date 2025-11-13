@@ -12,8 +12,8 @@
 
 | Backbone | Batch Size | Training Time | GPU Memory |
 |----------|------------|---------------|------------|
-| ViT-B/16 | 8 | ~22 hours | ~19GB |
-| ViT-Large | 4 | ~90 hours | ~45GB |
+| ViT-B/16 | 8 | ~22 hours | ~8GB |
+| ViT-Large | 4 | ~90 hours | ~19GB |
 
 Hardware: NVIDIA A6000 (48GB VRAM)
 
