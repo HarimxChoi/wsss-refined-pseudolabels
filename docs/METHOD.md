@@ -3,81 +3,106 @@
 ## Overview
 
 Our framework extends standard WSSS pipelines with enhanced pseudo-label 
-refinement mechanisms.
+refinement mechanisms that progressively improve segmentation quality 
+during training.
 
 ## Architecture
 ```
 Input Image (with image-level labels)
     ↓
-Frozen CLIP ViT-B/16 Encoder
-    +
-Frozen DINOv2 Encoder
+Frozen Vision Encoders (CLIP + DINO)
     ↓
-Feature Fusion
+Feature Fusion & Decoder
     ↓
-Lightweight Decoder (3 layers)
+Initial Segmentation Predictions
     ↓
-Initial Segmentation + CAM
+Refinement Module
     ↓
-Refinement Module (Multi-Stage)
+Refined Pseudo-Labels
     ↓
-Final Pseudo-Labels
-    ↓
-Segmentation Loss
+Multi-Objective Loss
 ```
 
-## Refinement Strategy
+**Key Components:**
+- Frozen backbone: CLIP ViT + DINOv2 for complementary features
+- Lightweight decoder: Efficient segmentation head
+- Refinement module: Progressive pseudo-label optimization
+- Multi-stage training: Adaptive learning strategy
 
-### Phase 1: Exploration (Iter 35k-50k)
+## Core Innovations
 
-Focus on identifying and correcting disagreements between model predictions 
-and initial CAMs through reliability-gated selection.
+### 1. Multi-Signal Reliability Estimation
 
-**Key mechanisms:**
-- Temporal consistency tracking across training iterations
-- Confidence-based filtering of predictions
-- Spatial coherence validation
+Pseudo-label quality is assessed through multiple complementary signals 
+rather than single-source confidence. This enables robust filtering of 
+training samples across diverse scenarios.
 
-### Phase 2: Consolidation (Iter 50k-80k)
+**Design principles:**
+- Leverage temporal information across training iterations
+- Integrate model confidence with structural consistency
+- Balance multiple quality indicators
 
-Shift focus to reinforcing high-confidence agreements while maintaining 
-selective disagreement resolution.
+### 2. Progressive Refinement Strategy
 
-**Adaptive thresholds:**
-- Progressive reliability threshold scheduling
-- Dynamic quality gates for pseudo-label acceptance
+The training process adapts its refinement approach based on model maturity, 
+transitioning from exploration to consolidation as pseudo-label quality improves.
+
+**Key characteristics:**
+- Early stage: Broad exploration of prediction space
+- Later stage: Focused consolidation of high-quality regions
+- Adaptive thresholds: Dynamic adjustment of quality gates
+
+### 3. Boundary-Aware Optimization
+
+Special attention to challenging boundary regions through uncertainty-guided 
+loss weighting, improving object edge quality.
 
 ## Loss Functions
 
-**Segmentation Loss:**
-- Cross-entropy on refined pseudo-labels
-- Dice loss for class imbalance
+**Primary Objectives:**
+- Segmentation loss on refined pseudo-labels
+- Class balance handling
 
-**Auxiliary Losses:**
-- Boundary loss with uncertainty weighting
+**Auxiliary Objectives:**
+- Boundary refinement
 - Cross-view consistency (CLIP ↔ DINO)
-- Attention affinity regularization
+- Spatial affinity regularization
 
-## Training Details
+Loss weights are dynamically adjusted during training to emphasize 
+different aspects at different stages.
+
+## Training Configuration
 
 **Optimization:**
-- Optimizer: AdamW
-- Learning rate: 2e-5 (polynomial decay)
+- Optimizer: AdamW with polynomial learning rate decay
+- Base learning rate: 2e-5
+- Total iterations: 80,000
 - Warmup: 50 iterations
-- Weight decay: 0.01
 
-**Data Augmentation:**
-- Random resizing: [512, 2048]
-- Random rescaling: [0.5, 2.0]
-- Random horizontal flip
-- Random crop: 320×320
+**Data Processing:**
+- Multi-scale training with extensive augmentation
+- Random resizing, rescaling, cropping, flipping
+- Input resolution: 320×320
 
-**Pseudo-Label Filtering:**
-- Multi-signal reliability estimation
-- Progressive threshold scheduling
-- Boundary-aware weighting
+**Computational Requirements:**
+- GPU: NVIDIA A6000 (48GB)
+- Batch size: 8 (ViT-B/16) / 4 (ViT-Large)
+- Training time: ~22 hours (ViT-B) / ~90 hours (ViT-Large)
 
-Implementation details contain proprietary components under research agreement.
-```
+## Implementation Notes
 
----
+The refinement module and progressive training strategy contain proprietary 
+optimization techniques developed under research collaboration agreement.
+
+**Available components:**
+- Training configuration (general hyperparameters)
+- Loss function formulations (high-level)
+- Architecture overview
+
+**Proprietary components:**
+- Detailed refinement algorithms
+- Quality gate implementation
+- Threshold scheduling strategies
+
+For inquiries, 
+contact: 2.harim.choi@gmail.com
