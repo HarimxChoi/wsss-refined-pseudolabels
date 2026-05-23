@@ -1,0 +1,48 @@
+# Datasets and pretrained weights
+data/
+datasets/coco/
+datasets/voc/
+pretrained/
+logs/
+results/
+*.pth
+*.pt
+*.ckpt
+*.npy
+*.npz
+*.pkl
+*.zip
+*.tar
+*.tar.gz
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.out
+wandb/
+
+# Secrets
+.env
+*.key

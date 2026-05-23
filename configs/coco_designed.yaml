@@ -1,0 +1,116 @@
+dataset:
+  root_dir: /data/MSCOCO
+  name_list_dir: ./datasets/coco
+  num_classes: 81
+  crop_size: 320
+  resize_range: [512, 2048]
+  rescale_range: [0.5, 2.0]
+  ignore_index: 255
+
+work_dir:  # save directory
+  dir: /workspace3/results/weclip_coco
+  ckpt_dir: checkpoints
+  pred_dir: predictions
+  segs_dir: segs
+  tb_logger_dir: tb_logger
+
+train:
+  split: train
+  samples_per_gpu: 8 #8
+  max_iters: 80000
+  cam_iters: 5000
+  eval_iters: 5000
+  log_iters: 200
+
+val:
+  split: val
+
+optimizer:
+  type: AdamW
+  learning_rate: 2e-5
+  betas: [0.9, 0.999]
+  weight_decay: 0.01
+
+scheduler:
+  warmup_iter: 50
+  warmup_ratio: 1e-6
+  power: 1.0
+
+clip_init:
+  clip_pretrain_path: ./pretrained/ViT-B-16.pt
+  embedding_dim: 256
+  in_channels: [768, 768, 768, 768]
+  clip_flag: 16 # if VIT-B-16, set as 16
+  resize_long: 512
+
+# ----------------------------------
+dino_init:
+  dino_model: 'dinov2_vits14'
+  dino_fts_fuse_dim: 384
+  decoder_layer: 3
+
+urn_T: 1.0
+urn_beta: 0.2
+urn_gamma_start: 0.70
+urn_gamma_end: 0.85
+urn_w_min: 0.3
+
+beco_alpha: 0.5
+lambda_boundary: 0.3
+
+ema_enable: true
+ema_tau: 0.996
+ema_uncert_every: 2
+ema_uncert_down: 0.5
+
+lambda_attn: 0.1
+
+# === WCE (Weighted Cross Entropy) ===
+wce_beta: 0.999              # class weight EMA coefficient
+wce_bg_weight: 0.3           # BG class down-weight
+
+# === BG Mixture (learnable background prior) ===
+bg_mix_lambda: 0.5           # CAM seedfrom BG prior mixing ratio (0~1)
+bg_prior_lambda: 0.2
+
+# === Teacher prob injection ===
+post_cam_warmup: 15000
+high_conf_merge_iter: 25000
+teacher_cam_tau: 0.75
+
+# === CAM create params ===
+seg_attn_q: 0.75             # Seg-Attn gating quantile (0~1)
+cam_box_thresh: 0.5          # Scoremap2bbox threshold
+trans_rw: 1                  # Random walk steps
+ 
+
+#dino_init:
+#  dino_model: 'dinov2_vits14_reg'
+#  dino_fts_fuse_dim: 384
+#  decoder_layer: 3
+
+
+#dino_init:
+#  dino_model: 'dinov2_vitb14'
+#  dino_fts_fuse_dim: 768
+#  decoder_layer: 3
+
+
+#dino_init:
+#  dino_model: 'dinov2_vitb14_reg'
+#  dino_fts_fuse_dim: 768
+#  decoder_layer: 3
+
+
+#dino_init:
+#  dino_model: 'dinov2_vitl14'
+#  dino_fts_fuse_dim: 1024
+#  decoder_layer: 5
+
+
+#dino_init:
+#  dino_model: 'dinov2_vitl14_reg'
+#  dino_fts_fuse_dim: 1024
+#  decoder_layer: 5
+
+

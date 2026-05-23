@@ -1,0 +1,79 @@
+dataset:
+  root_dir: /data/MSCOCO
+  name_list_dir: ./datasets/coco
+  num_classes: 81
+  crop_size: 320
+  resize_range: [512, 2048]
+  rescale_range: [0.5, 2.0]
+  ignore_index: 255
+
+work_dir:
+  dir: /workspace3/results/weclip_selftrain
+  ckpt_dir: checkpoints
+  pred_dir: predictions
+  segs_dir: segs
+  tb_logger_dir: tb_logger
+
+train:
+  split: train
+  samples_per_gpu: 8
+  max_iters: 80000
+  eval_iters: 10000
+  log_iters: 200
+
+val:
+  split: val
+
+optimizer:
+  type: AdamW
+  learning_rate: 2e-5
+  betas: [0.9, 0.999]
+  weight_decay: 0.01
+
+scheduler:
+  warmup_iter: 50
+  warmup_ratio: 1e-6
+  power: 1.0
+
+clip_init:
+  clip_pretrain_path: ./pretrained/ViT-B-16.pt
+  embedding_dim: 256
+  in_channels: [768, 768, 768, 768]
+  clip_flag: 16
+  resize_long: 512
+
+dino_init:
+  dino_model: 'dinov2_vits14'
+  dino_fts_fuse_dim: 384
+  decoder_layer: 3
+
+# Self-Training RFM
+rfm:
+  enable: true
+  buffer_size: 10
+  start_iter: 35000
+  reliability_threshold: 0.55
+  w_hist: 0.35
+  w_confidence: 0.35
+  w_spatial: 0.3
+
+# Loss weights
+loss:
+  lambda_ce: 1.0
+  lambda_dice: 1.0
+  lambda_attn: 0.1
+  lambda_cross: 0.1
+  lambda_boundary: 0.2
+
+# URN/BECO
+urn:
+  beta: 0.2
+  gamma_start: 0.68
+  gamma_end: 0.85
+
+beco:
+  alpha: 0.3
+
+seg_attn_q: 0.75
+cam_box_thresh: 0.5
+trans_rw: 1
