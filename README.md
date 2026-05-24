@@ -9,6 +9,10 @@ Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
+![Architecture](./architecture.png)
+
+*WeCLIP+ baseline + our RFM (Region Feature Matching) refinement (pink box) + disagreement-aware self-training loop. RFM generates region-level reliability scores from inter-block attention disagreement to refine pseudo-labels.*
+
 ## What it does
 
 - Inputs: image + class labels (no pixel masks)
