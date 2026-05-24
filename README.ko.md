@@ -1,19 +1,19 @@
 # wsss-refined-pseudolabels
 
-English | [한국어](./README.ko.md)
+[English](./README.md) | 한국어
 
-Weakly-supervised semantic segmentation with refined pseudo-labels. SOTA 56.2% mIoU on COCO-Val (+4.3pp over WeCLIP+ baseline).
+Refined pseudo-label로 푸는 약지도 시맨틱 segmentation. COCO-Val 56.2% mIoU SOTA (WeCLIP+ baseline 대비 +4.3pp).
 
-Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) — the extended journal version of the CVPR 2024 WeCLIP paper. This repo adds an RFM (Region Feature Matching) refinement step and a disagreement-aware self-training loop that together improve pseudo-label quality on COCO and VOC.
+[WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) 위에 구축. CVPR 2024 WeCLIP의 저널 확장판이다. 이 repo는 RFM (Region Feature Matching) refinement 단계 + disagreement-aware self-training loop를 추가해서 COCO / VOC pseudo-label 품질을 끌어올림.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ## What it does
 
-- Inputs: image + class labels (no pixel masks)
-- Outputs: refined per-pixel pseudo-labels for downstream semantic segmentation training
-- Boost: +4.3 percentage points mIoU over WeCLIP+ 80K-iter baseline on COCO-Val (51.9 → 56.2), and +9.1pp over the original WeCLIP (47.1 → 56.2)
+- 입력: 이미지 + class label (픽셀 마스크 X)
+- 출력: downstream 시맨틱 segmentation 학습용 refined per-pixel pseudo-label
+- 효과: COCO-Val에서 WeCLIP+ 80K-iter baseline 대비 +4.3pp mIoU (51.9 → 56.2), 오리지널 WeCLIP 대비 +9.1pp (47.1 → 56.2)
 
 ## Approach
 
@@ -41,9 +41,9 @@ Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/
 | WeCLIP+ 80K-iter baseline (fair comparison) | 51.9 |
 | **Ours (RFM + Self-Train)** | **56.2** |
 
-Δ over WeCLIP+ 80K baseline: **+4.3pp**. Δ over original WeCLIP: **+9.1pp**.
+WeCLIP+ 80K baseline 대비 Δ: **+4.3pp**. 오리지널 WeCLIP 대비 Δ: **+9.1pp**.
 
-The 80K-iter cutoff is used for fair comparison; the WeCLIP+ TPAMI extended version reports higher numbers with longer schedules.
+80K-iter cutoff는 공정 비교용. WeCLIP+ TPAMI 확장판은 더 긴 스케줄로 더 높은 숫자를 보고함.
 
 ## Repository layout
 
@@ -77,9 +77,9 @@ python test_msc_flip_coco.py --config configs/coco_attn_reg.yaml --weights <path
 
 ## Repository note
 
-This repo provides the WeCLIP+ baseline integration, model architecture, configs, evaluation pipeline, and designed-variant scripts. **Two core methods — the RFM (Region Feature Matching) refinement step and the disagreement-aware self-training loop — are intentionally not included in this public release.** Their algorithms are described in the accompanying paper; release is pending the paper's preprint.
+이 repo가 제공하는 것: WeCLIP+ baseline 통합, 모델 아키텍처, config, 평가 파이프라인, designed-variant 스크립트. **핵심 메서드 2개 (RFM refinement 단계 + disagreement-aware self-training loop)는 이번 public release에 의도적으로 빠져 있음.** 알고리즘은 동봉 페이퍼에 기술되어 있고, 페이퍼 preprint 공개에 맞춰 릴리스 예정.
 
-`configs/coco_rfm_ts.yaml` and `configs/coco_selftrain.yaml` show the hyperparameter structure but the corresponding scripts/modules (`scripts/dist_rfm_ts.py`, `scripts/dist_clip_selftrain_disagree.py`, `scripts/rfm_disagree.py`, `WeCLIP_Plus/model_rfm_ts_coco.py`) are withheld.
+`configs/coco_rfm_ts.yaml`과 `configs/coco_selftrain.yaml`은 하이퍼파라미터 구조만 보여줌. 대응되는 스크립트 / 모듈 (`scripts/dist_rfm_ts.py`, `scripts/dist_clip_selftrain_disagree.py`, `scripts/rfm_disagree.py`, `WeCLIP_Plus/model_rfm_ts_coco.py`)은 비공개.
 
 ## License
 
