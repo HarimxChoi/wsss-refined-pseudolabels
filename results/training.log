@@ -1,0 +1,628 @@
+2025-11-02 15:45:35,958 - dist_clip_selftrain_disagree7.py - INFO: 
+args: Namespace(config='configs/coco_selftrain7_test3.yaml', resume='/workspace3/results/weclip_selftrain_v7/checkpoints/2025-11-01-07-41/wetr_iter_50000.pth', work_dir='/workspace3/results/weclip_selftrain7_test3', radius=8, crop_size=320, seed=1)
+2025-11-02 15:45:35,958 - dist_clip_selftrain_disagree7.py - INFO: 
+config: {'dataset': {'root_dir': '/data/MSCOCO', 'name_list_dir': './datasets/coco', 'num_classes': 81, 'crop_size': 320, 'resize_range': [512, 2048], 'rescale_range': [0.5, 2.0], 'ignore_index': 255}, 'work_dir': {'dir': '/workspace3/results/weclip_selftrain7_test3', 'ckpt_dir': '/workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45', 'pred_dir': '/workspace3/results/weclip_selftrain7_test3/predictions', 'segs_dir': 'segs', 'tb_logger_dir': '/workspace3/results/weclip_selftrain7_test3/tb_logger/2025-11-02-15-45'}, 'train': {'split': 'train', 'samples_per_gpu': 8, 'max_iters': 80000, 'eval_iters': 10000, 'log_iters': 200}, 'val': {'split': 'val'}, 'optimizer': {'type': 'AdamW', 'learning_rate': 2e-05, 'betas': [0.9, 0.999], 'weight_decay': 0.01}, 'scheduler': {'warmup_iter': 50, 'warmup_ratio': 1e-06, 'power': 1.0}, 'clip_init': {'clip_pretrain_path': './pretrained/ViT-B-16.pt', 'embedding_dim': 256, 'in_channels': [768, 768, 768, 768], 'clip_flag': 16, 'resize_long': 512}, 'dino_init': {'dino_model': 'dinov2_vits14', 'dino_fts_fuse_dim': 384, 'decoder_layer': 3}, 'rfm': {'enable': True, 'buffer_size': 20, 'downsample_size': 20, 'start_iter': 35000, 'reliability_threshold': 0.55, 'w_hist': 0.3, 'w_confidence': 0.35, 'w_spatial': 0.35, 'progressive': {'enable': True, 'stages': [[35000, 0.55], [50000, 0.825]]}, 'phase2': {'agreement_threshold': 0.7}}, 'loss': {'lambda_ce': 1.0, 'lambda_dice': 1.0, 'lambda_attn': 0.1, 'lambda_cross': 0.1, 'lambda_boundary': 0.2}, 'urn': {'beta': 0.2, 'gamma_start': 0.68, 'gamma_end': 0.85}, 'beco': {'alpha': 0.3}, 'seg_attn_q': 0.75, 'cam_box_thresh': 0.5, 'trans_rw': 1}
+2025-11-02 15:45:37,505 - vision_transformer.py - INFO: using MLP layer as FFN
+2025-11-02 15:45:38,734 - dist_clip_selftrain_disagree7.py - INFO: 
+Model initialized
+2025-11-02 15:45:38,750 - dist_clip_selftrain_disagree7.py - INFO: RFM: Progressive thresholds: [(35000, 0.55), (50000, 0.825)]
+2025-11-02 15:45:38,750 - dist_clip_selftrain_disagree7.py - INFO: RFM: start=35000, th=0.55
+2025-11-02 15:45:38,750 - dist_clip_selftrain_disagree7.py - INFO: RFM: Weights w_t=0.30, w_c=0.35, w_s=0.35
+2025-11-02 15:45:38,750 - dist_clip_selftrain_disagree7.py - INFO: RFM: Phase 2 agreement_th=0.70
+2025-11-02 15:45:38,759 - dist_clip_selftrain_disagree7.py - INFO: Optimizer initialized
+2025-11-02 15:45:41,509 - dist_clip_selftrain_disagree7.py - INFO: [RESUME] Buffer restored: 77851 images
+2025-11-02 15:45:41,509 - dist_clip_selftrain_disagree7.py - INFO: RFM: Weights w_t=0.30, w_c=0.35, w_s=0.35
+2025-11-02 15:45:41,509 - dist_clip_selftrain_disagree7.py - INFO: [RESUME] from iter 50000
+2025-11-02 15:45:41,509 - dist_clip_selftrain_disagree7.py - INFO: [RESUME] Current LRs: [7.50025e-06, 0.0, 7.500249999999999e-05, 7.500249999999999e-05]
+2025-11-02 15:48:50,136 - dist_clip_selftrain_disagree7.py - INFO: Iter:50200 | 0:03:15 ETA:0:01:55 LR:7.450e-06 | CE:0.0614 Dice:0.9115 Cross:0.1090 Attn:0.2901 Bnd:0.0445 mAcc:0.7537 | RFM[agreement_learning]: th=0.82 res=0.371 dis=0.392 agr=89074 rel=0.825
+2025-11-02 15:48:50,136 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.825 σ=0.137 p50=0.887 p75=0.900 p90=0.999] PASS[0.70→61.5% | 0.75→60.9% | 0.80→54.6% | 0.85→53.4%]
+2025-11-02 15:48:50,154 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.56GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 77953 imgs, 121600 preds (~186MB)
+2025-11-02 15:48:50,154 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.787 edge=0.0257 w_urn=0.961 w_beco=1.008
+2025-11-02 15:51:55,329 - dist_clip_selftrain_disagree7.py - INFO: Iter:50400 | 0:06:20 ETA:0:03:43 LR:7.400e-06 | CE:0.0373 Dice:0.9077 Cross:0.1070 Attn:0.2815 Bnd:0.0418 mAcc:0.8833 | RFM[agreement_learning]: th=0.82 res=0.169 dis=0.140 agr=79410 rel=0.802
+2025-11-02 15:51:55,329 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.802 σ=0.134 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→49.3% | 0.75→48.9% | 0.80→44.5% | 0.85→43.9%]
+2025-11-02 15:51:55,331 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.57GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78036 imgs, 123200 preds (~188MB)
+2025-11-02 15:51:55,331 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.787 edge=0.0280 w_urn=0.964 w_beco=1.008
+2025-11-02 15:54:59,975 - dist_clip_selftrain_disagree7.py - INFO: Iter:50600 | 0:09:24 ETA:0:05:27 LR:7.350e-06 | CE:0.0352 Dice:0.9078 Cross:0.1033 Attn:0.2851 Bnd:0.0419 mAcc:0.8694 | RFM[agreement_learning]: th=0.82 res=0.141 dis=0.152 agr=274440 rel=0.861
+2025-11-02 15:54:59,975 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.861 σ=0.120 p50=0.900 p75=0.995 p90=1.000] PASS[0.70→73.4% | 0.75→71.9% | 0.80→67.0% | 0.85→64.3%]
+2025-11-02 15:54:59,979 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.57GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78115 imgs, 124800 preds (~190MB)
+2025-11-02 15:54:59,979 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.788 edge=0.0174 w_urn=0.968 w_beco=1.005
+2025-11-02 15:58:11,256 - dist_clip_selftrain_disagree7.py - INFO: Iter:50800 | 0:12:36 ETA:0:07:14 LR:7.300e-06 | CE:0.0314 Dice:0.9052 Cross:0.1001 Attn:0.2889 Bnd:0.0419 mAcc:0.8478 | RFM[agreement_learning]: th=0.82 res=0.174 dis=0.184 agr=89270 rel=0.881
+2025-11-02 15:58:11,256 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.881 σ=0.130 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→74.0% | 0.75→73.5% | 0.80→72.1% | 0.85→71.4%]
+2025-11-02 15:58:11,258 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.58GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78198 imgs, 126400 preds (~193MB)
+2025-11-02 15:58:11,258 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.788 edge=0.0162 w_urn=0.971 w_beco=1.005
+2025-11-02 16:01:19,896 - dist_clip_selftrain_disagree7.py - INFO: Iter:51000 | 0:15:44 ETA:0:08:56 LR:7.250e-06 | CE:0.0289 Dice:0.9050 Cross:0.0990 Attn:0.2798 Bnd:0.0418 mAcc:0.6455 | RFM[agreement_learning]: th=0.82 res=0.012 dis=0.359 agr=54594 rel=0.699
+2025-11-02 16:01:19,896 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.699 σ=0.102 p50=0.693 p75=0.700 p90=0.900] PASS[0.70→12.4% | 0.75→12.4% | 0.80→12.3% | 0.85→12.1%]
+2025-11-02 16:01:19,899 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.59GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78271 imgs, 128000 preds (~195MB)
+2025-11-02 16:01:19,899 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.788 edge=0.0403 w_urn=0.948 w_beco=1.012
+2025-11-02 16:04:26,341 - dist_clip_selftrain_disagree7.py - INFO: Iter:51200 | 0:18:51 ETA:0:10:36 LR:7.200e-06 | CE:0.0303 Dice:0.9029 Cross:0.1016 Attn:0.2805 Bnd:0.0415 mAcc:0.7507 | RFM[agreement_learning]: th=0.82 res=0.136 dis=0.289 agr=91862 rel=0.826
+2025-11-02 16:04:26,341 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.826 σ=0.161 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→61.1% | 0.75→60.1% | 0.80→57.1% | 0.85→55.2%]
+2025-11-02 16:04:26,344 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.59GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78350 imgs, 129600 preds (~198MB)
+2025-11-02 16:04:26,344 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.789 edge=0.0246 w_urn=0.933 w_beco=1.007
+2025-11-02 16:07:35,803 - dist_clip_selftrain_disagree7.py - INFO: Iter:51400 | 0:22:00 ETA:0:12:14 LR:7.150e-06 | CE:0.0286 Dice:0.9026 Cross:0.0970 Attn:0.2790 Bnd:0.0415 mAcc:0.8068 | RFM[agreement_learning]: th=0.82 res=0.024 dis=0.198 agr=55509 rel=0.785
+2025-11-02 16:07:35,803 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.785 σ=0.146 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→37.3% | 0.75→37.2% | 0.80→37.1% | 0.85→36.9%]
+2025-11-02 16:07:35,808 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.60GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78438 imgs, 131200 preds (~200MB)
+2025-11-02 16:07:35,808 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.789 edge=0.0326 w_urn=0.958 w_beco=1.010
+2025-11-02 16:10:39,409 - dist_clip_selftrain_disagree7.py - INFO: Iter:51600 | 0:25:04 ETA:0:13:47 LR:7.100e-06 | CE:0.0304 Dice:0.9044 Cross:0.0987 Attn:0.2792 Bnd:0.0414 mAcc:0.6677 | RFM[agreement_learning]: th=0.82 res=0.160 dis=0.395 agr=90880 rel=0.811
+2025-11-02 16:10:39,410 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.811 σ=0.143 p50=0.799 p75=0.959 p90=1.000] PASS[0.70→56.9% | 0.75→54.1% | 0.80→48.2% | 0.85→45.9%]
+2025-11-02 16:10:39,413 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.60GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78510 imgs, 132800 preds (~203MB)
+2025-11-02 16:10:39,413 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.790 edge=0.0409 w_urn=0.949 w_beco=1.012
+2025-11-02 16:13:44,962 - dist_clip_selftrain_disagree7.py - INFO: Iter:51800 | 0:28:09 ETA:0:15:19 LR:7.050e-06 | CE:0.0305 Dice:0.9040 Cross:0.0981 Attn:0.2751 Bnd:0.0415 mAcc:0.8459 | RFM[agreement_learning]: th=0.82 res=0.175 dis=0.187 agr=200919 rel=0.890
+2025-11-02 16:13:44,962 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.127 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→85.5% | 0.75→83.7% | 0.80→77.8% | 0.85→74.3%]
+2025-11-02 16:13:44,965 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.61GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78590 imgs, 134400 preds (~205MB)
+2025-11-02 16:13:44,965 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.790 edge=0.0249 w_urn=0.955 w_beco=1.007
+2025-11-02 16:16:56,318 - dist_clip_selftrain_disagree7.py - INFO: Iter:52000 | 0:31:21 ETA:0:16:52 LR:7.000e-06 | CE:0.0320 Dice:0.9058 Cross:0.1021 Attn:0.2835 Bnd:0.0419 mAcc:0.8523 | RFM[agreement_learning]: th=0.82 res=0.393 dis=0.243 agr=142182 rel=0.892
+2025-11-02 16:16:56,319 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.892 σ=0.121 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→82.8% | 0.75→80.0% | 0.80→77.2% | 0.85→74.6%]
+2025-11-02 16:16:56,322 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.61GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78670 imgs, 136000 preds (~208MB)
+2025-11-02 16:16:56,322 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.790 edge=0.0154 w_urn=0.916 w_beco=1.005
+2025-11-02 16:20:05,704 - dist_clip_selftrain_disagree7.py - INFO: Iter:52200 | 0:34:30 ETA:0:18:22 LR:6.950e-06 | CE:0.0286 Dice:0.9077 Cross:0.0973 Attn:0.2736 Bnd:0.0415 mAcc:0.7729 | RFM[agreement_learning]: th=0.82 res=0.244 dis=0.300 agr=83983 rel=0.786
+2025-11-02 16:20:05,704 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.786 σ=0.139 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→47.0% | 0.75→44.2% | 0.80→40.5% | 0.85→37.3%]
+2025-11-02 16:20:05,709 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.62GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78767 imgs, 137600 preds (~210MB)
+2025-11-02 16:20:05,709 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.791 edge=0.0407 w_urn=0.946 w_beco=1.012
+2025-11-02 16:23:17,368 - dist_clip_selftrain_disagree7.py - INFO: Iter:52400 | 0:37:42 ETA:0:19:51 LR:6.900e-06 | CE:0.0303 Dice:0.9039 Cross:0.0978 Attn:0.2772 Bnd:0.0418 mAcc:0.8778 | RFM[agreement_learning]: th=0.82 res=0.277 dis=0.169 agr=185864 rel=0.820
+2025-11-02 16:23:17,368 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.820 σ=0.127 p50=0.800 p75=0.900 p90=1.000] PASS[0.70→60.9% | 0.75→58.9% | 0.80→48.5% | 0.85→44.6%]
+2025-11-02 16:23:17,370 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.62GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78852 imgs, 139200 preds (~212MB)
+2025-11-02 16:23:17,370 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.791 edge=0.0297 w_urn=0.942 w_beco=1.009
+2025-11-02 16:26:23,827 - dist_clip_selftrain_disagree7.py - INFO: Iter:52600 | 0:40:48 ETA:0:21:15 LR:6.850e-06 | CE:0.0256 Dice:0.9021 Cross:0.0919 Attn:0.2720 Bnd:0.0406 mAcc:0.8816 | RFM[agreement_learning]: th=0.82 res=0.300 dis=0.169 agr=240382 rel=0.835
+2025-11-02 16:26:23,827 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.835 σ=0.127 p50=0.887 p75=0.966 p90=0.999] PASS[0.70→61.0% | 0.75→59.6% | 0.80→55.8% | 0.85→53.7%]
+2025-11-02 16:26:23,829 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.63GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78929 imgs, 140800 preds (~215MB)
+2025-11-02 16:26:23,829 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.792 edge=0.0275 w_urn=0.966 w_beco=1.008
+2025-11-02 16:29:30,422 - dist_clip_selftrain_disagree7.py - INFO: Iter:52800 | 0:43:55 ETA:0:22:37 LR:6.800e-06 | CE:0.0268 Dice:0.9047 Cross:0.0928 Attn:0.2677 Bnd:0.0407 mAcc:0.7040 | RFM[agreement_learning]: th=0.82 res=0.209 dis=0.374 agr=169373 rel=0.835
+2025-11-02 16:29:30,422 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.835 σ=0.154 p50=0.898 p75=0.981 p90=1.000] PASS[0.70→73.5% | 0.75→72.6% | 0.80→64.0% | 0.85→62.5%]
+2025-11-02 16:29:30,424 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.63GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 78991 imgs, 142400 preds (~217MB)
+2025-11-02 16:29:30,425 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.792 edge=0.0335 w_urn=0.935 w_beco=1.010
+2025-11-02 16:32:37,841 - dist_clip_selftrain_disagree7.py - INFO: Iter:53000 | 0:47:02 ETA:0:23:57 LR:6.750e-06 | CE:0.0276 Dice:0.9074 Cross:0.0920 Attn:0.2725 Bnd:0.0410 mAcc:0.8732 | RFM[agreement_learning]: th=0.82 res=0.336 dis=0.191 agr=194618 rel=0.865
+2025-11-02 16:32:37,841 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.865 σ=0.122 p50=0.898 p75=0.999 p90=1.000] PASS[0.70→73.6% | 0.75→72.6% | 0.80→64.8% | 0.85→61.8%]
+2025-11-02 16:32:37,845 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.64GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79089 imgs, 144000 preds (~220MB)
+2025-11-02 16:32:37,845 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.793 edge=0.0322 w_urn=0.962 w_beco=1.010
+2025-11-02 16:35:47,366 - dist_clip_selftrain_disagree7.py - INFO: Iter:53200 | 0:50:12 ETA:0:25:17 LR:6.700e-06 | CE:0.0282 Dice:0.9050 Cross:0.0922 Attn:0.2721 Bnd:0.0413 mAcc:0.8276 | RFM[agreement_learning]: th=0.82 res=0.456 dis=0.317 agr=29758 rel=0.812
+2025-11-02 16:35:47,366 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.812 σ=0.150 p50=0.700 p75=0.999 p90=1.000] PASS[0.70→48.9% | 0.75→48.4% | 0.80→47.8% | 0.85→47.0%]
+2025-11-02 16:35:47,369 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.64GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79169 imgs, 145600 preds (~222MB)
+2025-11-02 16:35:47,369 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.793 edge=0.0278 w_urn=0.958 w_beco=1.008
+2025-11-02 16:38:53,674 - dist_clip_selftrain_disagree7.py - INFO: Iter:53400 | 0:53:18 ETA:0:26:33 LR:6.650e-06 | CE:0.0258 Dice:0.9046 Cross:0.0949 Attn:0.2653 Bnd:0.0405 mAcc:0.8103 | RFM[agreement_learning]: th=0.82 res=0.084 dis=0.207 agr=61033 rel=0.921
+2025-11-02 16:38:53,674 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.921 σ=0.112 p50=0.999 p75=1.000 p90=1.000] PASS[0.70→86.3% | 0.75→85.5% | 0.80→81.1% | 0.85→79.6%]
+2025-11-02 16:38:53,677 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.65GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79257 imgs, 147200 preds (~225MB)
+2025-11-02 16:38:53,677 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.793 edge=0.0130 w_urn=0.971 w_beco=1.004
+2025-11-02 16:41:58,071 - dist_clip_selftrain_disagree7.py - INFO: Iter:53600 | 0:56:23 ETA:0:27:46 LR:6.600e-06 | CE:0.0276 Dice:0.9080 Cross:0.0923 Attn:0.2680 Bnd:0.0406 mAcc:0.8197 | RFM[agreement_learning]: th=0.82 res=0.022 dis=0.184 agr=65 rel=0.754
+2025-11-02 16:41:58,071 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.754 σ=0.132 p50=0.700 p75=0.700 p90=0.999] PASS[0.70→24.5% | 0.75→24.4% | 0.80→23.9% | 0.85→23.6%]
+2025-11-02 16:41:58,074 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.66GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79340 imgs, 148800 preds (~227MB)
+2025-11-02 16:41:58,074 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.794 edge=0.0329 w_urn=0.968 w_beco=1.010
+2025-11-02 16:45:08,088 - dist_clip_selftrain_disagree7.py - INFO: Iter:53800 | 0:59:33 ETA:0:29:00 LR:6.550e-06 | CE:0.0263 Dice:0.9044 Cross:0.0892 Attn:0.2729 Bnd:0.0409 mAcc:0.7934 | RFM[agreement_learning]: th=0.82 res=0.107 dis=0.231 agr=39688 rel=0.735
+2025-11-02 16:45:08,088 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.735 σ=0.101 p50=0.700 p75=0.700 p90=0.900] PASS[0.70→24.4% | 0.75→24.0% | 0.80→20.4% | 0.85→19.7%]
+2025-11-02 16:45:08,091 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.66GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79433 imgs, 150400 preds (~229MB)
+2025-11-02 16:45:08,091 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.794 edge=0.0289 w_urn=0.965 w_beco=1.009
+2025-11-02 16:48:21,578 - dist_clip_selftrain_disagree7.py - INFO: Iter:54000 | 1:02:46 ETA:0:30:13 LR:6.500e-06 | CE:0.0267 Dice:0.9027 Cross:0.0926 Attn:0.2666 Bnd:0.0416 mAcc:0.7863 | RFM[agreement_learning]: th=0.82 res=0.035 dis=0.222 agr=38606 rel=0.778
+2025-11-02 16:48:21,578 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.778 σ=0.130 p50=0.700 p75=0.900 p90=0.997] PASS[0.70→37.2% | 0.75→37.0% | 0.80→36.3% | 0.85→36.0%]
+2025-11-02 16:48:21,581 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.67GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79521 imgs, 152000 preds (~232MB)
+2025-11-02 16:48:21,582 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.795 edge=0.0261 w_urn=0.967 w_beco=1.008
+2025-11-02 16:51:28,958 - dist_clip_selftrain_disagree7.py - INFO: Iter:54200 | 1:05:53 ETA:0:31:21 LR:6.450e-06 | CE:0.0267 Dice:0.9022 Cross:0.0959 Attn:0.2656 Bnd:0.0413 mAcc:0.8424 | RFM[agreement_learning]: th=0.82 res=0.436 dis=0.279 agr=73816 rel=0.836
+2025-11-02 16:51:28,959 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.836 σ=0.154 p50=0.895 p75=0.999 p90=1.000] PASS[0.70→61.4% | 0.75→60.7% | 0.80→57.6% | 0.85→56.2%]
+2025-11-02 16:51:28,962 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.67GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79588 imgs, 153600 preds (~234MB)
+2025-11-02 16:51:28,962 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.795 edge=0.0250 w_urn=0.959 w_beco=1.008
+2025-11-02 16:54:37,380 - dist_clip_selftrain_disagree7.py - INFO: Iter:54400 | 1:09:02 ETA:0:32:29 LR:6.400e-06 | CE:0.0263 Dice:0.9015 Cross:0.0918 Attn:0.2680 Bnd:0.0414 mAcc:0.6432 | RFM[agreement_learning]: th=0.82 res=0.031 dis=0.368 agr=52830 rel=0.811
+2025-11-02 16:54:37,380 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.811 σ=0.164 p50=0.700 p75=1.000 p90=1.000] PASS[0.70→49.8% | 0.75→49.7% | 0.80→49.6% | 0.85→49.3%]
+2025-11-02 16:54:37,383 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.68GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79664 imgs, 155200 preds (~237MB)
+2025-11-02 16:54:37,384 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.796 edge=0.0237 w_urn=0.954 w_beco=1.007
+2025-11-02 16:57:47,139 - dist_clip_selftrain_disagree7.py - INFO: Iter:54600 | 1:12:12 ETA:0:33:35 LR:6.350e-06 | CE:0.0272 Dice:0.9026 Cross:0.0954 Attn:0.2682 Bnd:0.0412 mAcc:0.8940 | RFM[agreement_learning]: th=0.82 res=0.082 dis=0.115 agr=86378 rel=0.734
+2025-11-02 16:57:47,139 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.734 σ=0.103 p50=0.700 p75=0.700 p90=0.900] PASS[0.70→24.4% | 0.75→24.2% | 0.80→21.1% | 0.85→20.7%]
+2025-11-02 16:57:47,144 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.68GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79740 imgs, 156800 preds (~239MB)
+2025-11-02 16:57:47,145 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.796 edge=0.0229 w_urn=0.973 w_beco=1.007
+2025-11-02 17:00:54,387 - dist_clip_selftrain_disagree7.py - INFO: Iter:54800 | 1:15:19 ETA:0:34:38 LR:6.300e-06 | CE:0.0263 Dice:0.9024 Cross:0.0931 Attn:0.2683 Bnd:0.0409 mAcc:0.6823 | RFM[agreement_learning]: th=0.82 res=0.155 dis=0.376 agr=148964 rel=0.864
+2025-11-02 17:00:54,387 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.864 σ=0.127 p50=0.897 p75=1.000 p90=1.000] PASS[0.70→73.1% | 0.75→71.5% | 0.80→65.4% | 0.85→62.6%]
+2025-11-02 17:00:54,391 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.69GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79825 imgs, 158400 preds (~242MB)
+2025-11-02 17:00:54,391 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.796 edge=0.0287 w_urn=0.950 w_beco=1.009
+2025-11-02 17:04:05,518 - dist_clip_selftrain_disagree7.py - INFO: Iter:55000 | 1:18:30 ETA:0:35:40 LR:6.250e-06 | CE:0.0256 Dice:0.9030 Cross:0.0945 Attn:0.2634 Bnd:0.0412 mAcc:0.8156 | RFM[agreement_learning]: th=0.82 res=0.125 dis=0.211 agr=36520 rel=0.746
+2025-11-02 17:04:05,518 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.746 σ=0.115 p50=0.700 p75=0.700 p90=0.994] PASS[0.70→24.4% | 0.75→23.9% | 0.80→21.6% | 0.85→20.9%]
+2025-11-02 17:04:05,522 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.69GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79910 imgs, 160000 preds (~244MB)
+2025-11-02 17:04:05,522 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.797 edge=0.0326 w_urn=0.970 w_beco=1.010
+2025-11-02 17:07:12,715 - dist_clip_selftrain_disagree7.py - INFO: Iter:55200 | 1:21:37 ETA:0:36:40 LR:6.200e-06 | CE:0.0261 Dice:0.9000 Cross:0.0914 Attn:0.2663 Bnd:0.0410 mAcc:0.6968 | RFM[agreement_learning]: th=0.82 res=0.183 dis=0.371 agr=88644 rel=0.781
+2025-11-02 17:07:12,715 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.781 σ=0.120 p50=0.700 p75=0.898 p90=0.996] PASS[0.70→45.8% | 0.75→42.9% | 0.80→35.4% | 0.85→33.1%]
+2025-11-02 17:07:12,718 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.70GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 79993 imgs, 161600 preds (~247MB)
+2025-11-02 17:07:12,718 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.797 edge=0.0300 w_urn=0.943 w_beco=1.009
+2025-11-02 17:10:21,405 - dist_clip_selftrain_disagree7.py - INFO: Iter:55400 | 1:24:46 ETA:0:37:38 LR:6.150e-06 | CE:0.0259 Dice:0.9036 Cross:0.0960 Attn:0.2671 Bnd:0.0412 mAcc:0.8029 | RFM[agreement_learning]: th=0.82 res=0.387 dis=0.322 agr=203895 rel=0.783
+2025-11-02 17:10:21,405 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.783 σ=0.129 p50=0.700 p75=0.899 p90=0.997] PASS[0.70→47.4% | 0.75→45.9% | 0.80→41.2% | 0.85→38.8%]
+2025-11-02 17:10:21,407 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.71GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80069 imgs, 163200 preds (~249MB)
+2025-11-02 17:10:21,407 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.798 edge=0.0283 w_urn=0.956 w_beco=1.008
+2025-11-02 17:13:29,167 - dist_clip_selftrain_disagree7.py - INFO: Iter:55600 | 1:27:54 ETA:0:38:34 LR:6.100e-06 | CE:0.0261 Dice:0.9020 Cross:0.0965 Attn:0.2613 Bnd:0.0410 mAcc:0.8126 | RFM[agreement_learning]: th=0.82 res=0.109 dis=0.210 agr=150204 rel=0.868
+2025-11-02 17:13:29,168 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.868 σ=0.128 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→73.5% | 0.75→72.4% | 0.80→66.3% | 0.85→64.0%]
+2025-11-02 17:13:29,170 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.71GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80155 imgs, 164800 preds (~251MB)
+2025-11-02 17:13:29,170 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.798 edge=0.0397 w_urn=0.966 w_beco=1.012
+2025-11-02 17:16:39,686 - dist_clip_selftrain_disagree7.py - INFO: Iter:55800 | 1:31:04 ETA:0:39:29 LR:6.050e-06 | CE:0.0268 Dice:0.9026 Cross:0.0883 Attn:0.2633 Bnd:0.0410 mAcc:0.9061 | RFM[agreement_learning]: th=0.82 res=0.094 dis=0.104 agr=139706 rel=0.842
+2025-11-02 17:16:39,686 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.842 σ=0.134 p50=0.900 p75=0.997 p90=1.000] PASS[0.70→62.2% | 0.75→62.1% | 0.80→60.3% | 0.85→59.8%]
+2025-11-02 17:16:39,689 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.71GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80257 imgs, 166400 preds (~254MB)
+2025-11-02 17:16:39,689 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.799 edge=0.0137 w_urn=0.961 w_beco=1.004
+2025-11-02 17:19:50,164 - dist_clip_selftrain_disagree7.py - INFO: Iter:56000 | 1:34:15 ETA:0:40:23 LR:6.000e-06 | CE:0.0272 Dice:0.9043 Cross:0.0947 Attn:0.2675 Bnd:0.0413 mAcc:0.9074 | RFM[agreement_learning]: th=0.82 res=0.053 dis=0.098 agr=146359 rel=0.729
+2025-11-02 17:19:50,164 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.729 σ=0.094 p50=0.700 p75=0.700 p90=0.900] PASS[0.70→21.9% | 0.75→20.3% | 0.80→15.0% | 0.85→14.5%]
+2025-11-02 17:19:50,167 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.72GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80342 imgs, 168000 preds (~256MB)
+2025-11-02 17:19:50,167 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.799 edge=0.0376 w_urn=0.949 w_beco=1.011
+2025-11-02 17:22:53,523 - dist_clip_selftrain_disagree7.py - INFO: Iter:56200 | 1:37:18 ETA:0:41:12 LR:5.950e-06 | CE:0.0256 Dice:0.9013 Cross:0.0878 Attn:0.2640 Bnd:0.0408 mAcc:0.9237 | RFM[agreement_learning]: th=0.82 res=0.597 dis=0.189 agr=173955 rel=0.779
+2025-11-02 17:22:53,523 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.779 σ=0.121 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→37.1% | 0.75→36.9% | 0.80→34.2% | 0.85→33.7%]
+2025-11-02 17:22:53,526 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.73GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80415 imgs, 169600 preds (~259MB)
+2025-11-02 17:22:53,526 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.799 edge=0.0251 w_urn=0.973 w_beco=1.008
+2025-11-02 17:26:03,333 - dist_clip_selftrain_disagree7.py - INFO: Iter:56400 | 1:40:28 ETA:0:42:02 LR:5.900e-06 | CE:0.0247 Dice:0.9026 Cross:0.0904 Attn:0.2638 Bnd:0.0412 mAcc:0.7836 | RFM[agreement_learning]: th=0.82 res=0.138 dis=0.251 agr=98339 rel=0.866
+2025-11-02 17:26:03,333 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.866 σ=0.127 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→73.7% | 0.75→72.3% | 0.80→67.0% | 0.85→64.7%]
+2025-11-02 17:26:03,336 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.73GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80484 imgs, 171200 preds (~261MB)
+2025-11-02 17:26:03,336 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.800 edge=0.0306 w_urn=0.966 w_beco=1.009
+2025-11-02 17:29:09,385 - dist_clip_selftrain_disagree7.py - INFO: Iter:56600 | 1:43:34 ETA:0:42:49 LR:5.850e-06 | CE:0.0236 Dice:0.9007 Cross:0.0892 Attn:0.2625 Bnd:0.0410 mAcc:0.7859 | RFM[agreement_learning]: th=0.82 res=0.203 dis=0.269 agr=139072 rel=0.862
+2025-11-02 17:29:09,385 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.862 σ=0.128 p50=0.893 p75=0.999 p90=1.000] PASS[0.70→73.6% | 0.75→72.4% | 0.80→66.3% | 0.85→62.5%]
+2025-11-02 17:29:09,389 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.74GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80568 imgs, 172800 preds (~264MB)
+2025-11-02 17:29:09,389 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.800 edge=0.0292 w_urn=0.950 w_beco=1.009
+2025-11-02 17:32:21,243 - dist_clip_selftrain_disagree7.py - INFO: Iter:56800 | 1:46:46 ETA:0:43:36 LR:5.800e-06 | CE:0.0239 Dice:0.9044 Cross:0.0923 Attn:0.2620 Bnd:0.0411 mAcc:0.6268 | RFM[agreement_learning]: th=0.82 res=0.169 dis=0.449 agr=33611 rel=0.755
+2025-11-02 17:32:21,243 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.755 σ=0.119 p50=0.700 p75=0.855 p90=0.955] PASS[0.70→36.3% | 0.75→35.0% | 0.80→29.0% | 0.85→25.6%]
+2025-11-02 17:32:21,246 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.74GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80657 imgs, 174400 preds (~266MB)
+2025-11-02 17:32:21,246 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.801 edge=0.0298 w_urn=0.954 w_beco=1.009
+2025-11-02 17:35:28,385 - dist_clip_selftrain_disagree7.py - INFO: Iter:57000 | 1:49:53 ETA:0:44:20 LR:5.750e-06 | CE:0.0262 Dice:0.9040 Cross:0.0926 Attn:0.2597 Bnd:0.0411 mAcc:0.7823 | RFM[agreement_learning]: th=0.82 res=0.186 dis=0.268 agr=37330 rel=0.757
+2025-11-02 17:35:28,385 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.757 σ=0.135 p50=0.700 p75=0.888 p90=1.000] PASS[0.70→36.3% | 0.75→35.4% | 0.80→31.7% | 0.85→29.0%]
+2025-11-02 17:35:28,388 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.74GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80745 imgs, 176000 preds (~269MB)
+2025-11-02 17:35:28,389 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.801 edge=0.0312 w_urn=0.945 w_beco=1.009
+2025-11-02 17:38:37,284 - dist_clip_selftrain_disagree7.py - INFO: Iter:57200 | 1:53:02 ETA:0:45:03 LR:5.700e-06 | CE:0.0265 Dice:0.9019 Cross:0.0932 Attn:0.2621 Bnd:0.0414 mAcc:0.8810 | RFM[agreement_learning]: th=0.82 res=0.511 dis=0.243 agr=217307 rel=0.848
+2025-11-02 17:38:37,284 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.848 σ=0.131 p50=0.899 p75=0.922 p90=1.000] PASS[0.70→73.6% | 0.75→72.8% | 0.80→66.3% | 0.85→64.0%]
+2025-11-02 17:38:37,287 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.75GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80825 imgs, 177600 preds (~271MB)
+2025-11-02 17:38:37,287 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.802 edge=0.0242 w_urn=0.952 w_beco=1.007
+2025-11-02 17:41:44,673 - dist_clip_selftrain_disagree7.py - INFO: Iter:57400 | 1:56:09 ETA:0:45:43 LR:5.650e-06 | CE:0.0253 Dice:0.9034 Cross:0.0896 Attn:0.2615 Bnd:0.0407 mAcc:0.6906 | RFM[agreement_learning]: th=0.82 res=0.046 dis=0.324 agr=27320 rel=0.759
+2025-11-02 17:41:44,674 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.759 σ=0.151 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→36.7% | 0.75→36.0% | 0.80→33.2% | 0.85→32.4%]
+2025-11-02 17:41:44,676 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.76GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80916 imgs, 179200 preds (~273MB)
+2025-11-02 17:41:44,676 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.802 edge=0.0338 w_urn=0.949 w_beco=1.010
+2025-11-02 17:44:53,691 - dist_clip_selftrain_disagree7.py - INFO: Iter:57600 | 1:59:18 ETA:0:46:23 LR:5.600e-06 | CE:0.0257 Dice:0.8999 Cross:0.0928 Attn:0.2581 Bnd:0.0412 mAcc:0.8934 | RFM[agreement_learning]: th=0.82 res=0.215 dis=0.136 agr=135163 rel=0.801
+2025-11-02 17:44:53,691 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.801 σ=0.127 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→49.4% | 0.75→49.1% | 0.80→47.3% | 0.85→45.8%]
+2025-11-02 17:44:53,694 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.76GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 80994 imgs, 180800 preds (~276MB)
+2025-11-02 17:44:53,694 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.802 edge=0.0293 w_urn=0.967 w_beco=1.009
+2025-11-02 17:48:06,131 - dist_clip_selftrain_disagree7.py - INFO: Iter:57800 | 2:02:31 ETA:0:47:03 LR:5.550e-06 | CE:0.0264 Dice:0.9009 Cross:0.0857 Attn:0.2596 Bnd:0.0409 mAcc:0.8274 | RFM[agreement_learning]: th=0.82 res=0.263 dis=0.234 agr=117266 rel=0.786
+2025-11-02 17:48:06,131 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.786 σ=0.123 p50=0.700 p75=0.899 p90=0.996] PASS[0.70→47.6% | 0.75→46.1% | 0.80→38.6% | 0.85→36.3%]
+2025-11-02 17:48:06,134 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.77GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81071 imgs, 182400 preds (~278MB)
+2025-11-02 17:48:06,134 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.803 edge=0.0351 w_urn=0.965 w_beco=1.011
+2025-11-02 17:51:15,787 - dist_clip_selftrain_disagree7.py - INFO: Iter:58000 | 2:05:40 ETA:0:47:40 LR:5.500e-06 | CE:0.0298 Dice:0.9036 Cross:0.0904 Attn:0.2611 Bnd:0.0417 mAcc:0.7728 | RFM[agreement_learning]: th=0.82 res=0.175 dis=0.276 agr=72227 rel=0.773
+2025-11-02 17:51:15,787 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.773 σ=0.125 p50=0.700 p75=0.898 p90=0.999] PASS[0.70→36.7% | 0.75→36.1% | 0.80→33.7% | 0.85→32.0%]
+2025-11-02 17:51:15,790 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.77GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81164 imgs, 184000 preds (~281MB)
+2025-11-02 17:51:15,790 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.803 edge=0.0330 w_urn=0.967 w_beco=1.010
+2025-11-02 17:54:24,348 - dist_clip_selftrain_disagree7.py - INFO: Iter:58200 | 2:08:49 ETA:0:48:15 LR:5.450e-06 | CE:0.0258 Dice:0.9032 Cross:0.0899 Attn:0.2538 Bnd:0.0409 mAcc:0.7446 | RFM[agreement_learning]: th=0.82 res=0.054 dis=0.270 agr=80705 rel=0.746
+2025-11-02 17:54:24,348 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.746 σ=0.123 p50=0.699 p75=0.700 p90=1.000] PASS[0.70→24.9% | 0.75→24.9% | 0.80→21.8% | 0.85→21.6%]
+2025-11-02 17:54:24,351 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.78GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81238 imgs, 185600 preds (~283MB)
+2025-11-02 17:54:24,351 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.804 edge=0.0194 w_urn=0.971 w_beco=1.006
+2025-11-02 17:57:29,804 - dist_clip_selftrain_disagree7.py - INFO: Iter:58400 | 2:11:54 ETA:0:48:47 LR:5.400e-06 | CE:0.0263 Dice:0.9034 Cross:0.0919 Attn:0.2591 Bnd:0.0404 mAcc:0.7347 | RFM[agreement_learning]: th=0.82 res=0.117 dis=0.301 agr=148293 rel=0.796
+2025-11-02 17:57:29,804 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.796 σ=0.138 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→49.4% | 0.75→49.1% | 0.80→47.6% | 0.85→44.9%]
+2025-11-02 17:57:29,808 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.78GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81317 imgs, 187200 preds (~286MB)
+2025-11-02 17:57:29,808 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.804 edge=0.0219 w_urn=0.957 w_beco=1.007
+2025-11-02 18:00:37,654 - dist_clip_selftrain_disagree7.py - INFO: Iter:58600 | 2:15:02 ETA:0:49:18 LR:5.350e-06 | CE:0.0248 Dice:0.8980 Cross:0.0889 Attn:0.2555 Bnd:0.0408 mAcc:0.7355 | RFM[agreement_learning]: th=0.82 res=0.200 dis=0.331 agr=138867 rel=0.857
+2025-11-02 18:00:37,654 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.857 σ=0.138 p50=0.899 p75=0.999 p90=1.000] PASS[0.70→73.1% | 0.75→71.9% | 0.80→65.8% | 0.85→63.8%]
+2025-11-02 18:00:37,656 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.79GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81396 imgs, 188800 preds (~288MB)
+2025-11-02 18:00:37,657 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.805 edge=0.0282 w_urn=0.955 w_beco=1.008
+2025-11-02 18:03:46,431 - dist_clip_selftrain_disagree7.py - INFO: Iter:58800 | 2:18:11 ETA:0:49:49 LR:5.300e-06 | CE:0.0268 Dice:0.9056 Cross:0.0893 Attn:0.2616 Bnd:0.0410 mAcc:0.7949 | RFM[agreement_learning]: th=0.82 res=0.249 dis=0.273 agr=47407 rel=0.769
+2025-11-02 18:03:46,431 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.769 σ=0.136 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→36.6% | 0.75→36.0% | 0.80→33.6% | 0.85→32.7%]
+2025-11-02 18:03:46,434 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.80GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81492 imgs, 190400 preds (~291MB)
+2025-11-02 18:03:46,434 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.805 edge=0.0289 w_urn=0.951 w_beco=1.009
+2025-11-02 18:06:55,647 - dist_clip_selftrain_disagree7.py - INFO: Iter:59000 | 2:21:20 ETA:0:50:18 LR:5.250e-06 | CE:0.0257 Dice:0.9024 Cross:0.0893 Attn:0.2598 Bnd:0.0410 mAcc:0.8306 | RFM[agreement_learning]: th=0.82 res=0.146 dis=0.199 agr=93352 rel=0.803
+2025-11-02 18:06:55,647 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.803 σ=0.129 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→49.2% | 0.75→48.7% | 0.80→42.8% | 0.85→41.9%]
+2025-11-02 18:06:55,650 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.80GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81581 imgs, 192000 preds (~293MB)
+2025-11-02 18:06:55,650 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.805 edge=0.0300 w_urn=0.973 w_beco=1.009
+2025-11-02 18:10:05,929 - dist_clip_selftrain_disagree7.py - INFO: Iter:59200 | 2:24:30 ETA:0:50:46 LR:5.200e-06 | CE:0.0252 Dice:0.9021 Cross:0.0870 Attn:0.2619 Bnd:0.0411 mAcc:0.9007 | RFM[agreement_learning]: th=0.82 res=0.093 dis=0.109 agr=46974 rel=0.881
+2025-11-02 18:10:05,929 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.881 σ=0.127 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→74.5% | 0.75→74.3% | 0.80→68.4% | 0.85→67.4%]
+2025-11-02 18:10:05,933 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.81GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81662 imgs, 193600 preds (~295MB)
+2025-11-02 18:10:05,933 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.806 edge=0.0184 w_urn=0.975 w_beco=1.006
+2025-11-02 18:13:15,809 - dist_clip_selftrain_disagree7.py - INFO: Iter:59400 | 2:27:40 ETA:0:51:12 LR:5.150e-06 | CE:0.0266 Dice:0.9007 Cross:0.0886 Attn:0.2635 Bnd:0.0415 mAcc:0.8800 | RFM[agreement_learning]: th=0.82 res=0.379 dis=0.193 agr=160829 rel=0.797
+2025-11-02 18:13:15,809 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.797 σ=0.117 p50=0.797 p75=0.900 p90=0.937] PASS[0.70→57.1% | 0.75→54.5% | 0.80→45.0% | 0.85→41.6%]
+2025-11-02 18:13:15,813 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.81GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81745 imgs, 195200 preds (~298MB)
+2025-11-02 18:13:15,813 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.806 edge=0.0291 w_urn=0.954 w_beco=1.009
+2025-11-02 18:16:25,039 - dist_clip_selftrain_disagree7.py - INFO: Iter:59600 | 2:30:50 ETA:0:51:37 LR:5.100e-06 | CE:0.0241 Dice:0.9010 Cross:0.0856 Attn:0.2612 Bnd:0.0409 mAcc:0.7626 | RFM[agreement_learning]: th=0.82 res=0.133 dis=0.274 agr=102319 rel=0.777
+2025-11-02 18:16:25,039 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.777 σ=0.139 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→36.8% | 0.75→36.5% | 0.80→35.4% | 0.85→34.5%]
+2025-11-02 18:16:25,041 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.82GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81821 imgs, 196800 preds (~300MB)
+2025-11-02 18:16:25,042 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.807 edge=0.0281 w_urn=0.967 w_beco=1.008
+2025-11-02 18:19:32,122 - dist_clip_selftrain_disagree7.py - INFO: Iter:59800 | 2:33:57 ETA:0:52:00 LR:5.050e-06 | CE:0.0262 Dice:0.9015 Cross:0.0848 Attn:0.2578 Bnd:0.0410 mAcc:0.7502 | RFM[agreement_learning]: th=0.82 res=0.170 dis=0.301 agr=108130 rel=0.756
+2025-11-02 18:19:32,122 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.756 σ=0.110 p50=0.700 p75=0.879 p90=0.900] PASS[0.70→36.9% | 0.75→36.6% | 0.80→27.2% | 0.85→26.3%]
+2025-11-02 18:19:32,128 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.82GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81903 imgs, 198400 preds (~303MB)
+2025-11-02 18:19:32,128 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.807 edge=0.0418 w_urn=0.968 w_beco=1.013
+2025-11-02 18:22:43,078 - dist_clip_selftrain_disagree7.py - INFO: Iter:60000 | 2:37:08 ETA:0:52:22 LR:5.000e-06 | CE:0.0263 Dice:0.9004 Cross:0.0904 Attn:0.2574 Bnd:0.0411 mAcc:0.7012 | RFM[agreement_learning]: th=0.82 res=0.075 dis=0.323 agr=125597 rel=0.762
+2025-11-02 18:22:43,078 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.762 σ=0.131 p50=0.700 p75=0.895 p90=0.997] PASS[0.70→36.6% | 0.75→35.9% | 0.80→32.6% | 0.85→30.6%]
+2025-11-02 18:22:43,080 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=3.83GB GPU=1.91GB (reserved=7.14GB, peak=5.09GB) | Buffer: 81978 imgs, 200000 preds (~305MB)
+2025-11-02 18:22:43,081 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.807 edge=0.0445 w_urn=0.967 w_beco=1.013
+2025-11-02 18:22:43,081 - dist_clip_selftrain_disagree7.py - INFO: Validating...
+2025-11-02 18:43:04,295 - dist_clip_selftrain_disagree7.py - INFO: [VAL] mIoU:0.5192 pAcc:0.8698
+2025-11-02 18:43:08,687 - dist_clip_selftrain_disagree7.py - INFO: Saved: /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_iter_60000.pth
+2025-11-02 18:43:12,762 - dist_clip_selftrain_disagree7.py - INFO: 🌟 NEW BEST mIoU: 0.5192 → /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_best.pth
+2025-11-02 18:46:15,889 - dist_clip_selftrain_disagree7.py - INFO: Iter:60200 | 3:00:40 ETA:0:59:25 LR:4.950e-06 | CE:0.0204 Dice:0.9027 Cross:0.0835 Attn:0.2595 Bnd:0.0404 mAcc:0.7485 | RFM[agreement_learning]: th=0.82 res=0.056 dis=0.266 agr=72199 rel=0.783
+2025-11-02 18:46:15,889 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.783 σ=0.133 p50=0.700 p75=0.900 p90=1.000] PASS[0.70→46.4% | 0.75→42.5% | 0.80→38.7% | 0.85→36.8%]
+2025-11-02 18:46:15,892 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.04GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82061 imgs, 201600 preds (~308MB)
+2025-11-02 18:46:15,892 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.808 edge=0.0367 w_urn=0.960 w_beco=1.011
+2025-11-02 18:49:11,694 - dist_clip_selftrain_disagree7.py - INFO: Iter:60400 | 3:03:36 ETA:0:59:34 LR:4.900e-06 | CE:0.0231 Dice:0.8927 Cross:0.0816 Attn:0.2600 Bnd:0.0394 mAcc:0.7751 | RFM[agreement_learning]: th=0.82 res=0.447 dis=0.407 agr=181720 rel=0.906
+2025-11-02 18:49:11,694 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.906 σ=0.091 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→97.4% | 0.75→94.4% | 0.80→87.4% | 0.85→71.9%]
+2025-11-02 18:49:11,708 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.05GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 203200 preds (~310MB)
+2025-11-02 18:49:11,708 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.808 edge=0.0277 w_urn=0.951 w_beco=1.008
+2025-11-02 18:52:06,203 - dist_clip_selftrain_disagree7.py - INFO: Iter:60600 | 3:06:31 ETA:0:59:42 LR:4.850e-06 | CE:0.0244 Dice:0.8912 Cross:0.0861 Attn:0.2610 Bnd:0.0390 mAcc:0.9794 | RFM[agreement_learning]: th=0.82 res=0.711 dis=0.071 agr=303050 rel=0.939
+2025-11-02 18:52:06,203 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.939 σ=0.069 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→99.0% | 0.75→98.6% | 0.80→97.9% | 0.85→83.3%]
+2025-11-02 18:52:06,206 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.05GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 204800 preds (~312MB)
+2025-11-02 18:52:06,207 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.809 edge=0.0152 w_urn=0.974 w_beco=1.005
+2025-11-02 18:55:03,352 - dist_clip_selftrain_disagree7.py - INFO: Iter:60800 | 3:09:28 ETA:0:59:49 LR:4.800e-06 | CE:0.0217 Dice:0.8909 Cross:0.0819 Attn:0.2604 Bnd:0.0390 mAcc:0.8216 | RFM[agreement_learning]: th=0.82 res=0.250 dis=0.238 agr=228662 rel=0.926
+2025-11-02 18:55:03,352 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.926 σ=0.088 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.6% | 0.75→94.9% | 0.80→91.2% | 0.85→77.8%]
+2025-11-02 18:55:03,355 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.06GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 206400 preds (~315MB)
+2025-11-02 18:55:03,355 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.809 edge=0.0243 w_urn=0.962 w_beco=1.007
+2025-11-02 18:57:56,650 - dist_clip_selftrain_disagree7.py - INFO: Iter:61000 | 3:12:21 ETA:0:59:54 LR:4.750e-06 | CE:0.0220 Dice:0.8891 Cross:0.0821 Attn:0.2619 Bnd:0.0390 mAcc:0.7621 | RFM[agreement_learning]: th=0.82 res=0.263 dis=0.323 agr=225921 rel=0.897
+2025-11-02 18:57:56,650 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.897 σ=0.096 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→95.6% | 0.75→93.2% | 0.80→86.8% | 0.85→65.9%]
+2025-11-02 18:57:56,654 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.06GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 208000 preds (~317MB)
+2025-11-02 18:57:56,654 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.810 edge=0.0301 w_urn=0.958 w_beco=1.009
+2025-11-02 19:00:51,293 - dist_clip_selftrain_disagree7.py - INFO: Iter:61200 | 3:15:16 ETA:0:59:59 LR:4.700e-06 | CE:0.0232 Dice:0.8894 Cross:0.0851 Attn:0.2621 Bnd:0.0390 mAcc:0.9414 | RFM[agreement_learning]: th=0.82 res=0.497 dis=0.116 agr=243708 rel=0.924
+2025-11-02 19:00:51,293 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.924 σ=0.083 p50=0.924 p75=1.000 p90=1.000] PASS[0.70→98.2% | 0.75→96.7% | 0.80→90.7% | 0.85→82.7%]
+2025-11-02 19:00:51,296 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.07GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 209600 preds (~320MB)
+2025-11-02 19:00:51,296 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.810 edge=0.0259 w_urn=0.961 w_beco=1.008
+2025-11-02 19:03:46,234 - dist_clip_selftrain_disagree7.py - INFO: Iter:61400 | 3:18:11 ETA:1:00:02 LR:4.650e-06 | CE:0.0237 Dice:0.8889 Cross:0.0889 Attn:0.2551 Bnd:0.0391 mAcc:0.9481 | RFM[agreement_learning]: th=0.82 res=0.719 dis=0.185 agr=181044 rel=0.933
+2025-11-02 19:03:46,234 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.933 σ=0.070 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.7% | 0.75→98.1% | 0.80→96.0% | 0.85→87.7%]
+2025-11-02 19:03:46,237 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.07GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 211200 preds (~322MB)
+2025-11-02 19:03:46,237 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.810 edge=0.0251 w_urn=0.974 w_beco=1.008
+2025-11-02 19:06:45,378 - dist_clip_selftrain_disagree7.py - INFO: Iter:61600 | 3:21:10 ETA:1:00:05 LR:4.600e-06 | CE:0.0236 Dice:0.8883 Cross:0.0853 Attn:0.2577 Bnd:0.0392 mAcc:0.8026 | RFM[agreement_learning]: th=0.82 res=0.303 dis=0.283 agr=295569 rel=0.905
+2025-11-02 19:06:45,378 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.905 σ=0.083 p50=0.924 p75=0.997 p90=1.000] PASS[0.70→97.6% | 0.75→95.9% | 0.80→90.6% | 0.85→69.9%]
+2025-11-02 19:06:45,382 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.08GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 212800 preds (~325MB)
+2025-11-02 19:06:45,382 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.811 edge=0.0275 w_urn=0.968 w_beco=1.008
+2025-11-02 19:09:49,852 - dist_clip_selftrain_disagree7.py - INFO: Iter:61800 | 3:24:14 ETA:1:00:08 LR:4.550e-06 | CE:0.0238 Dice:0.8889 Cross:0.0884 Attn:0.2536 Bnd:0.0387 mAcc:0.9198 | RFM[agreement_learning]: th=0.82 res=0.422 dis=0.139 agr=222569 rel=0.878
+2025-11-02 19:09:49,852 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.878 σ=0.102 p50=0.900 p75=0.930 p90=1.000] PASS[0.70→85.8% | 0.75→84.4% | 0.80→78.8% | 0.85→60.8%]
+2025-11-02 19:09:49,855 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.08GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 214400 preds (~327MB)
+2025-11-02 19:09:49,856 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.811 edge=0.0233 w_urn=0.969 w_beco=1.007
+2025-11-02 19:13:03,936 - dist_clip_selftrain_disagree7.py - INFO: Iter:62000 | 3:27:28 ETA:1:00:13 LR:4.500e-06 | CE:0.0232 Dice:0.8887 Cross:0.0839 Attn:0.2593 Bnd:0.0391 mAcc:0.9443 | RFM[agreement_learning]: th=0.82 res=0.559 dis=0.126 agr=158793 rel=0.939
+2025-11-02 19:13:03,936 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.939 σ=0.080 p50=0.999 p75=1.000 p90=1.000] PASS[0.70→98.3% | 0.75→96.9% | 0.80→93.5% | 0.85→85.8%]
+2025-11-02 19:13:03,938 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.09GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 216000 preds (~330MB)
+2025-11-02 19:13:03,939 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.812 edge=0.0206 w_urn=0.966 w_beco=1.006
+2025-11-02 19:16:13,551 - dist_clip_selftrain_disagree7.py - INFO: Iter:62200 | 3:30:38 ETA:1:00:16 LR:4.450e-06 | CE:0.0223 Dice:0.8877 Cross:0.0822 Attn:0.2549 Bnd:0.0387 mAcc:0.9190 | RFM[agreement_learning]: th=0.82 res=0.434 dis=0.143 agr=332369 rel=0.910
+2025-11-02 19:16:13,551 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.910 σ=0.076 p50=0.922 p75=0.997 p90=1.000] PASS[0.70→98.5% | 0.75→97.7% | 0.80→90.9% | 0.85→72.7%]
+2025-11-02 19:16:13,553 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.10GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 217600 preds (~332MB)
+2025-11-02 19:16:13,553 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.812 edge=0.0178 w_urn=0.963 w_beco=1.005
+2025-11-02 19:19:24,366 - dist_clip_selftrain_disagree7.py - INFO: Iter:62400 | 3:33:49 ETA:1:00:18 LR:4.400e-06 | CE:0.0220 Dice:0.8899 Cross:0.0847 Attn:0.2593 Bnd:0.0391 mAcc:0.8091 | RFM[agreement_learning]: th=0.82 res=0.307 dis=0.276 agr=50406 rel=0.898
+2025-11-02 19:19:24,367 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.898 σ=0.114 p50=0.924 p75=1.000 p90=1.000] PASS[0.70→86.4% | 0.75→85.8% | 0.80→84.4% | 0.85→70.3%]
+2025-11-02 19:19:24,369 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.10GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 219200 preds (~334MB)
+2025-11-02 19:19:24,370 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.813 edge=0.0373 w_urn=0.972 w_beco=1.011
+2025-11-02 19:22:35,049 - dist_clip_selftrain_disagree7.py - INFO: Iter:62600 | 3:37:00 ETA:1:00:18 LR:4.350e-06 | CE:0.0221 Dice:0.8893 Cross:0.0817 Attn:0.2596 Bnd:0.0391 mAcc:0.8374 | RFM[agreement_learning]: th=0.82 res=0.293 dis=0.230 agr=141138 rel=0.871
+2025-11-02 19:22:35,049 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.871 σ=0.098 p50=0.900 p75=0.925 p90=1.000] PASS[0.70→86.2% | 0.75→85.4% | 0.80→83.4% | 0.85→59.5%]
+2025-11-02 19:22:35,052 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.11GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 220800 preds (~337MB)
+2025-11-02 19:22:35,052 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.813 edge=0.0268 w_urn=0.970 w_beco=1.008
+2025-11-02 19:25:40,957 - dist_clip_selftrain_disagree7.py - INFO: Iter:62800 | 3:40:05 ETA:1:00:16 LR:4.300e-06 | CE:0.0218 Dice:0.8925 Cross:0.0835 Attn:0.2561 Bnd:0.0388 mAcc:0.8172 | RFM[agreement_learning]: th=0.82 res=0.213 dis=0.232 agr=133205 rel=0.941
+2025-11-02 19:25:40,957 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.941 σ=0.075 p50=0.966 p75=1.000 p90=1.000] PASS[0.70→98.4% | 0.75→97.5% | 0.80→95.8% | 0.85→85.8%]
+2025-11-02 19:25:40,959 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.11GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 222400 preds (~339MB)
+2025-11-02 19:25:40,959 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.813 edge=0.0229 w_urn=0.976 w_beco=1.007
+2025-11-02 19:28:52,040 - dist_clip_selftrain_disagree7.py - INFO: Iter:63000 | 3:43:17 ETA:1:00:15 LR:4.250e-06 | CE:0.0219 Dice:0.8890 Cross:0.0871 Attn:0.2596 Bnd:0.0393 mAcc:0.9126 | RFM[agreement_learning]: th=0.82 res=0.692 dis=0.284 agr=137614 rel=0.928
+2025-11-02 19:28:52,040 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.928 σ=0.083 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.8% | 0.75→96.2% | 0.80→93.4% | 0.85→80.9%]
+2025-11-02 19:28:52,043 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.11GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 224000 preds (~342MB)
+2025-11-02 19:28:52,043 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.814 edge=0.0275 w_urn=0.961 w_beco=1.008
+2025-11-02 19:32:00,065 - dist_clip_selftrain_disagree7.py - INFO: Iter:63200 | 3:46:25 ETA:1:00:11 LR:4.200e-06 | CE:0.0230 Dice:0.8902 Cross:0.0834 Attn:0.2615 Bnd:0.0387 mAcc:0.8454 | RFM[agreement_learning]: th=0.82 res=0.402 dis=0.259 agr=193839 rel=0.885
+2025-11-02 19:32:00,065 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.885 σ=0.109 p50=0.900 p75=0.998 p90=1.000] PASS[0.70→86.2% | 0.75→85.3% | 0.80→81.2% | 0.85→65.8%]
+2025-11-02 19:32:00,069 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.12GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 225600 preds (~344MB)
+2025-11-02 19:32:00,069 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.814 edge=0.0356 w_urn=0.967 w_beco=1.011
+2025-11-02 19:35:12,225 - dist_clip_selftrain_disagree7.py - INFO: Iter:63400 | 3:49:37 ETA:1:00:07 LR:4.150e-06 | CE:0.0224 Dice:0.8899 Cross:0.0817 Attn:0.2575 Bnd:0.0391 mAcc:0.9567 | RFM[agreement_learning]: th=0.82 res=0.389 dis=0.071 agr=141676 rel=0.944
+2025-11-02 19:35:12,225 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.944 σ=0.086 p50=1.000 p75=1.000 p90=1.000] PASS[0.70→97.5% | 0.75→95.6% | 0.80→91.4% | 0.85→86.2%]
+2025-11-02 19:35:12,228 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.12GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 227200 preds (~347MB)
+2025-11-02 19:35:12,228 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.815 edge=0.0188 w_urn=0.973 w_beco=1.006
+2025-11-02 19:38:19,537 - dist_clip_selftrain_disagree7.py - INFO: Iter:63600 | 3:52:44 ETA:1:00:00 LR:4.100e-06 | CE:0.0218 Dice:0.8894 Cross:0.0818 Attn:0.2529 Bnd:0.0391 mAcc:0.9218 | RFM[agreement_learning]: th=0.82 res=0.405 dis=0.131 agr=237049 rel=0.912
+2025-11-02 19:38:19,537 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.912 σ=0.085 p50=0.920 p75=0.999 p90=1.000] PASS[0.70→97.5% | 0.75→95.4% | 0.80→89.3% | 0.85→76.3%]
+2025-11-02 19:38:19,540 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.13GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 228800 preds (~349MB)
+2025-11-02 19:38:19,541 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.815 edge=0.0231 w_urn=0.957 w_beco=1.007
+2025-11-02 19:41:26,992 - dist_clip_selftrain_disagree7.py - INFO: Iter:63800 | 3:55:51 ETA:0:59:53 LR:4.050e-06 | CE:0.0229 Dice:0.8886 Cross:0.0831 Attn:0.2534 Bnd:0.0388 mAcc:0.8309 | RFM[agreement_learning]: th=0.82 res=0.209 dis=0.214 agr=141065 rel=0.889
+2025-11-02 19:41:26,992 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.889 σ=0.113 p50=0.924 p75=1.000 p90=1.000] PASS[0.70→85.5% | 0.75→83.7% | 0.80→80.5% | 0.85→61.3%]
+2025-11-02 19:41:26,995 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.13GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 230400 preds (~352MB)
+2025-11-02 19:41:26,995 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.816 edge=0.0291 w_urn=0.972 w_beco=1.009
+2025-11-02 19:44:35,898 - dist_clip_selftrain_disagree7.py - INFO: Iter:64000 | 3:59:00 ETA:0:59:45 LR:4.000e-06 | CE:0.0225 Dice:0.8909 Cross:0.0843 Attn:0.2584 Bnd:0.0392 mAcc:0.8906 | RFM[agreement_learning]: th=0.82 res=0.528 dis=0.232 agr=318271 rel=0.880
+2025-11-02 19:44:35,898 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.880 σ=0.101 p50=0.900 p75=0.969 p90=1.000] PASS[0.70→94.7% | 0.75→89.5% | 0.80→81.2% | 0.85→57.2%]
+2025-11-02 19:44:35,900 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.14GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 232000 preds (~354MB)
+2025-11-02 19:44:35,900 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.816 edge=0.0254 w_urn=0.933 w_beco=1.008
+2025-11-02 19:47:46,531 - dist_clip_selftrain_disagree7.py - INFO: Iter:64200 | 4:02:11 ETA:0:59:36 LR:3.950e-06 | CE:0.0207 Dice:0.8862 Cross:0.0783 Attn:0.2549 Bnd:0.0389 mAcc:0.9466 | RFM[agreement_learning]: th=0.82 res=0.628 dis=0.144 agr=103684 rel=0.863
+2025-11-02 19:47:46,531 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.863 σ=0.123 p50=0.899 p75=1.000 p90=1.000] PASS[0.70→73.5% | 0.75→72.5% | 0.80→69.6% | 0.85→54.1%]
+2025-11-02 19:47:46,534 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.14GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 233600 preds (~356MB)
+2025-11-02 19:47:46,534 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.816 edge=0.0169 w_urn=0.970 w_beco=1.005
+2025-11-02 19:50:58,272 - dist_clip_selftrain_disagree7.py - INFO: Iter:64400 | 4:05:23 ETA:0:59:26 LR:3.900e-06 | CE:0.0225 Dice:0.8879 Cross:0.0816 Attn:0.2527 Bnd:0.0390 mAcc:0.6759 | RFM[agreement_learning]: th=0.82 res=0.213 dis=0.412 agr=52017 rel=0.890
+2025-11-02 19:50:58,272 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.120 p50=0.923 p75=1.000 p90=1.000] PASS[0.70→84.1% | 0.75→81.7% | 0.80→75.7% | 0.85→68.1%]
+2025-11-02 19:50:58,275 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.15GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 235200 preds (~359MB)
+2025-11-02 19:50:58,276 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.817 edge=0.0321 w_urn=0.963 w_beco=1.010
+2025-11-02 19:54:05,272 - dist_clip_selftrain_disagree7.py - INFO: Iter:64600 | 4:08:30 ETA:0:59:14 LR:3.850e-06 | CE:0.0223 Dice:0.8896 Cross:0.0818 Attn:0.2545 Bnd:0.0389 mAcc:0.7953 | RFM[agreement_learning]: th=0.82 res=0.390 dis=0.335 agr=173881 rel=0.874
+2025-11-02 19:54:05,272 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.874 σ=0.118 p50=0.900 p75=0.995 p90=1.000] PASS[0.70→84.7% | 0.75→82.4% | 0.80→78.1% | 0.85→60.6%]
+2025-11-02 19:54:05,276 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.16GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 236800 preds (~361MB)
+2025-11-02 19:54:05,276 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.817 edge=0.0343 w_urn=0.966 w_beco=1.010
+2025-11-02 19:57:15,068 - dist_clip_selftrain_disagree7.py - INFO: Iter:64800 | 4:11:40 ETA:0:59:01 LR:3.800e-06 | CE:0.0236 Dice:0.8864 Cross:0.0883 Attn:0.2614 Bnd:0.0395 mAcc:0.8171 | RFM[agreement_learning]: th=0.82 res=0.271 dis=0.251 agr=185762 rel=0.921
+2025-11-02 19:57:15,068 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.921 σ=0.075 p50=0.925 p75=0.999 p90=1.000] PASS[0.70→98.4% | 0.75→97.5% | 0.80→95.1% | 0.85→76.1%]
+2025-11-02 19:57:15,071 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.17GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 238400 preds (~364MB)
+2025-11-02 19:57:15,072 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.818 edge=0.0200 w_urn=0.975 w_beco=1.006
+2025-11-02 20:00:22,009 - dist_clip_selftrain_disagree7.py - INFO: Iter:65000 | 4:14:47 ETA:0:58:47 LR:3.750e-06 | CE:0.0228 Dice:0.8896 Cross:0.0884 Attn:0.2538 Bnd:0.0394 mAcc:0.7648 | RFM[agreement_learning]: th=0.82 res=0.393 dis=0.388 agr=183674 rel=0.880
+2025-11-02 20:00:22,009 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.880 σ=0.092 p50=0.900 p75=0.925 p90=1.000] PASS[0.70→95.3% | 0.75→91.4% | 0.80→81.8% | 0.85→64.6%]
+2025-11-02 20:00:22,012 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.17GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 240000 preds (~366MB)
+2025-11-02 20:00:22,012 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.818 edge=0.0470 w_urn=0.964 w_beco=1.014
+2025-11-02 20:03:33,374 - dist_clip_selftrain_disagree7.py - INFO: Iter:65200 | 4:17:58 ETA:0:58:33 LR:3.700e-06 | CE:0.0219 Dice:0.8846 Cross:0.0853 Attn:0.2589 Bnd:0.0391 mAcc:0.8564 | RFM[agreement_learning]: th=0.82 res=0.635 dis=0.393 agr=167890 rel=0.888
+2025-11-02 20:03:33,374 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.888 σ=0.101 p50=0.898 p75=0.998 p90=1.000] PASS[0.70→96.1% | 0.75→89.9% | 0.80→80.8% | 0.85→54.7%]
+2025-11-02 20:03:33,377 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.18GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 241600 preds (~369MB)
+2025-11-02 20:03:33,377 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.819 edge=0.0219 w_urn=0.961 w_beco=1.007
+2025-11-02 20:06:41,055 - dist_clip_selftrain_disagree7.py - INFO: Iter:65400 | 4:21:06 ETA:0:58:17 LR:3.650e-06 | CE:0.0219 Dice:0.8884 Cross:0.0846 Attn:0.2530 Bnd:0.0390 mAcc:0.8508 | RFM[agreement_learning]: th=0.82 res=0.285 dis=0.209 agr=255357 rel=0.916
+2025-11-02 20:06:41,055 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.916 σ=0.086 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→97.7% | 0.75→95.9% | 0.80→86.8% | 0.85→82.3%]
+2025-11-02 20:06:41,057 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.18GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 243200 preds (~371MB)
+2025-11-02 20:06:41,058 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.819 edge=0.0318 w_urn=0.972 w_beco=1.010
+2025-11-02 20:09:52,709 - dist_clip_selftrain_disagree7.py - INFO: Iter:65600 | 4:24:17 ETA:0:58:00 LR:3.600e-06 | CE:0.0230 Dice:0.8913 Cross:0.0872 Attn:0.2570 Bnd:0.0393 mAcc:0.8921 | RFM[agreement_learning]: th=0.82 res=0.431 dis=0.190 agr=98797 rel=0.923
+2025-11-02 20:09:52,709 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.923 σ=0.082 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.0% | 0.75→97.0% | 0.80→90.1% | 0.85→79.4%]
+2025-11-02 20:09:52,715 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.18GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 244800 preds (~374MB)
+2025-11-02 20:09:52,715 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.819 edge=0.0267 w_urn=0.968 w_beco=1.008
+2025-11-02 20:13:02,577 - dist_clip_selftrain_disagree7.py - INFO: Iter:65800 | 4:27:27 ETA:0:57:43 LR:3.550e-06 | CE:0.0240 Dice:0.8888 Cross:0.0824 Attn:0.2510 Bnd:0.0396 mAcc:0.7378 | RFM[agreement_learning]: th=0.82 res=0.182 dis=0.321 agr=128252 rel=0.916
+2025-11-02 20:13:02,577 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.916 σ=0.091 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.7% | 0.75→95.7% | 0.80→85.1% | 0.85→75.3%]
+2025-11-02 20:13:02,580 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.19GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 246400 preds (~376MB)
+2025-11-02 20:13:02,580 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.820 edge=0.0399 w_urn=0.965 w_beco=1.012
+2025-11-02 20:16:10,878 - dist_clip_selftrain_disagree7.py - INFO: Iter:66000 | 4:30:35 ETA:0:57:23 LR:3.500e-06 | CE:0.0231 Dice:0.8862 Cross:0.0816 Attn:0.2566 Bnd:0.0394 mAcc:0.8240 | RFM[agreement_learning]: th=0.82 res=0.310 dis=0.255 agr=252556 rel=0.920
+2025-11-02 20:16:10,878 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.920 σ=0.082 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.1% | 0.75→96.9% | 0.80→92.4% | 0.85→73.2%]
+2025-11-02 20:16:10,882 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.20GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 248000 preds (~378MB)
+2025-11-02 20:16:10,882 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.820 edge=0.0242 w_urn=0.967 w_beco=1.007
+2025-11-02 20:19:16,434 - dist_clip_selftrain_disagree7.py - INFO: Iter:66200 | 4:33:41 ETA:0:57:03 LR:3.450e-06 | CE:0.0213 Dice:0.8893 Cross:0.0822 Attn:0.2565 Bnd:0.0391 mAcc:0.7730 | RFM[agreement_learning]: th=0.82 res=0.415 dis=0.388 agr=157498 rel=0.813
+2025-11-02 20:19:16,434 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.813 σ=0.116 p50=0.846 p75=0.925 p90=0.925] PASS[0.70→67.9% | 0.75→63.5% | 0.80→56.6% | 0.85→37.9%]
+2025-11-02 20:19:16,438 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.20GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 249600 preds (~381MB)
+2025-11-02 20:19:16,438 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.821 edge=0.0331 w_urn=0.953 w_beco=1.010
+2025-11-02 20:22:25,407 - dist_clip_selftrain_disagree7.py - INFO: Iter:66400 | 4:36:50 ETA:0:56:42 LR:3.400e-06 | CE:0.0211 Dice:0.8870 Cross:0.0784 Attn:0.2514 Bnd:0.0388 mAcc:0.8558 | RFM[agreement_learning]: th=0.82 res=0.367 dis=0.228 agr=179738 rel=0.926
+2025-11-02 20:22:25,407 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.926 σ=0.097 p50=0.988 p75=1.000 p90=1.000] PASS[0.70→96.4% | 0.75→93.5% | 0.80→87.4% | 0.85→77.8%]
+2025-11-02 20:22:25,411 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.20GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 251200 preds (~383MB)
+2025-11-02 20:22:25,411 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.821 edge=0.0287 w_urn=0.951 w_beco=1.009
+2025-11-02 20:25:32,788 - dist_clip_selftrain_disagree7.py - INFO: Iter:66600 | 4:39:57 ETA:0:56:19 LR:3.350e-06 | CE:0.0229 Dice:0.8879 Cross:0.0819 Attn:0.2567 Bnd:0.0391 mAcc:0.9345 | RFM[agreement_learning]: th=0.82 res=0.572 dis=0.153 agr=372955 rel=0.905
+2025-11-02 20:25:32,788 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.905 σ=0.100 p50=0.918 p75=1.000 p90=1.000] PASS[0.70→96.0% | 0.75→92.6% | 0.80→82.7% | 0.85→68.8%]
+2025-11-02 20:25:32,791 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.21GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 252800 preds (~386MB)
+2025-11-02 20:25:32,791 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.822 edge=0.0241 w_urn=0.969 w_beco=1.007
+2025-11-02 20:28:42,340 - dist_clip_selftrain_disagree7.py - INFO: Iter:66800 | 4:43:07 ETA:0:55:56 LR:3.300e-06 | CE:0.0221 Dice:0.8883 Cross:0.0833 Attn:0.2620 Bnd:0.0392 mAcc:0.9509 | RFM[agreement_learning]: th=0.82 res=0.708 dis=0.168 agr=141790 rel=0.887
+2025-11-02 20:28:42,341 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.887 σ=0.112 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→85.2% | 0.75→82.7% | 0.80→77.5% | 0.85→66.2%]
+2025-11-02 20:28:42,344 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.22GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 254400 preds (~388MB)
+2025-11-02 20:28:42,344 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.822 edge=0.0174 w_urn=0.963 w_beco=1.005
+2025-11-02 20:31:47,860 - dist_clip_selftrain_disagree7.py - INFO: Iter:67000 | 4:46:12 ETA:0:55:31 LR:3.250e-06 | CE:0.0203 Dice:0.8920 Cross:0.0766 Attn:0.2558 Bnd:0.0388 mAcc:0.8371 | RFM[agreement_learning]: th=0.82 res=0.515 dis=0.336 agr=302365 rel=0.894
+2025-11-02 20:31:47,860 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.894 σ=0.095 p50=0.898 p75=1.000 p90=1.000] PASS[0.70→96.9% | 0.75→92.9% | 0.80→85.5% | 0.85→60.7%]
+2025-11-02 20:31:47,863 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.22GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 256000 preds (~391MB)
+2025-11-02 20:31:47,863 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.822 edge=0.0283 w_urn=0.964 w_beco=1.008
+2025-11-02 20:34:58,260 - dist_clip_selftrain_disagree7.py - INFO: Iter:67200 | 4:49:23 ETA:0:55:07 LR:3.200e-06 | CE:0.0217 Dice:0.8867 Cross:0.0820 Attn:0.2530 Bnd:0.0387 mAcc:0.8627 | RFM[agreement_learning]: th=0.82 res=0.284 dis=0.192 agr=56135 rel=0.951
+2025-11-02 20:34:58,260 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.951 σ=0.065 p50=1.000 p75=1.000 p90=1.000] PASS[0.70→99.4% | 0.75→99.1% | 0.80→98.3% | 0.85→87.4%]
+2025-11-02 20:34:58,263 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.23GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 257600 preds (~393MB)
+2025-11-02 20:34:58,263 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.823 edge=0.0187 w_urn=0.979 w_beco=1.006
+2025-11-02 20:38:06,511 - dist_clip_selftrain_disagree7.py - INFO: Iter:67400 | 4:52:31 ETA:0:54:41 LR:3.150e-06 | CE:0.0215 Dice:0.8895 Cross:0.0789 Attn:0.2522 Bnd:0.0390 mAcc:0.8036 | RFM[agreement_learning]: th=0.82 res=0.297 dis=0.279 agr=66000 rel=0.940
+2025-11-02 20:38:06,511 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.940 σ=0.078 p50=0.996 p75=1.000 p90=1.000] PASS[0.70→98.6% | 0.75→97.9% | 0.80→91.2% | 0.85→85.0%]
+2025-11-02 20:38:06,514 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.23GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 259200 preds (~396MB)
+2025-11-02 20:38:06,514 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.823 edge=0.0251 w_urn=0.979 w_beco=1.008
+2025-11-02 20:41:18,675 - dist_clip_selftrain_disagree7.py - INFO: Iter:67600 | 4:55:43 ETA:0:54:14 LR:3.100e-06 | CE:0.0208 Dice:0.8855 Cross:0.0811 Attn:0.2532 Bnd:0.0389 mAcc:0.9206 | RFM[agreement_learning]: th=0.82 res=0.713 dis=0.277 agr=100299 rel=0.942
+2025-11-02 20:41:18,675 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.942 σ=0.085 p50=0.999 p75=1.000 p90=1.000] PASS[0.70→97.7% | 0.75→95.6% | 0.80→91.6% | 0.85→86.0%]
+2025-11-02 20:41:18,677 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.24GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 260800 preds (~398MB)
+2025-11-02 20:41:18,677 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.824 edge=0.0220 w_urn=0.971 w_beco=1.007
+2025-11-02 20:44:30,032 - dist_clip_selftrain_disagree7.py - INFO: Iter:67800 | 4:58:55 ETA:0:53:47 LR:3.050e-06 | CE:0.0217 Dice:0.8877 Cross:0.0790 Attn:0.2504 Bnd:0.0390 mAcc:0.8417 | RFM[agreement_learning]: th=0.82 res=0.449 dis=0.287 agr=170236 rel=0.895
+2025-11-02 20:44:30,032 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.895 σ=0.103 p50=0.920 p75=1.000 p90=1.000] PASS[0.70→96.0% | 0.75→91.0% | 0.80→79.9% | 0.85→65.9%]
+2025-11-02 20:44:30,035 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.24GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 262400 preds (~400MB)
+2025-11-02 20:44:30,035 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.824 edge=0.0318 w_urn=0.948 w_beco=1.010
+2025-11-02 20:47:41,372 - dist_clip_selftrain_disagree7.py - INFO: Iter:68000 | 5:02:06 ETA:0:53:18 LR:3.000e-06 | CE:0.0219 Dice:0.8885 Cross:0.0860 Attn:0.2569 Bnd:0.0393 mAcc:0.9513 | RFM[agreement_learning]: th=0.82 res=0.774 dis=0.216 agr=169450 rel=0.933
+2025-11-02 20:47:41,372 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.933 σ=0.073 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→99.2% | 0.75→98.8% | 0.80→95.8% | 0.85→76.7%]
+2025-11-02 20:47:41,375 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.25GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 264000 preds (~403MB)
+2025-11-02 20:47:41,375 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.825 edge=0.0168 w_urn=0.975 w_beco=1.005
+2025-11-02 20:50:48,824 - dist_clip_selftrain_disagree7.py - INFO: Iter:68200 | 5:05:13 ETA:0:52:48 LR:2.950e-06 | CE:0.0218 Dice:0.8869 Cross:0.0815 Attn:0.2559 Bnd:0.0386 mAcc:0.7949 | RFM[agreement_learning]: th=0.82 res=0.222 dis=0.264 agr=326253 rel=0.897
+2025-11-02 20:50:48,824 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.897 σ=0.087 p50=0.900 p75=0.987 p90=1.000] PASS[0.70→96.7% | 0.75→94.3% | 0.80→85.7% | 0.85→76.3%]
+2025-11-02 20:50:48,830 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.25GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 265600 preds (~405MB)
+2025-11-02 20:50:48,830 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.825 edge=0.0305 w_urn=0.970 w_beco=1.009
+2025-11-02 20:53:58,142 - dist_clip_selftrain_disagree7.py - INFO: Iter:68400 | 5:08:23 ETA:0:52:17 LR:2.900e-06 | CE:0.0205 Dice:0.8873 Cross:0.0761 Attn:0.2505 Bnd:0.0388 mAcc:0.8135 | RFM[agreement_learning]: th=0.82 res=0.324 dis=0.276 agr=88810 rel=0.937
+2025-11-02 20:53:58,142 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.937 σ=0.087 p50=0.996 p75=1.000 p90=1.000] PASS[0.70→98.0% | 0.75→96.0% | 0.80→90.4% | 0.85→82.2%]
+2025-11-02 20:53:58,146 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.26GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 267200 preds (~408MB)
+2025-11-02 20:53:58,146 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.825 edge=0.0367 w_urn=0.968 w_beco=1.011
+2025-11-02 20:57:07,271 - dist_clip_selftrain_disagree7.py - INFO: Iter:68600 | 5:11:32 ETA:0:51:46 LR:2.850e-06 | CE:0.0228 Dice:0.8895 Cross:0.0858 Attn:0.2544 Bnd:0.0389 mAcc:0.8411 | RFM[agreement_learning]: th=0.82 res=0.185 dis=0.195 agr=233523 rel=0.895
+2025-11-02 20:57:07,271 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.895 σ=0.124 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→86.4% | 0.75→85.9% | 0.80→82.8% | 0.85→74.8%]
+2025-11-02 20:57:07,274 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.26GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 268800 preds (~410MB)
+2025-11-02 20:57:07,274 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.826 edge=0.0271 w_urn=0.968 w_beco=1.008
+2025-11-02 21:00:20,737 - dist_clip_selftrain_disagree7.py - INFO: Iter:68800 | 5:14:45 ETA:0:51:14 LR:2.800e-06 | CE:0.0218 Dice:0.8862 Cross:0.0798 Attn:0.2506 Bnd:0.0392 mAcc:0.9550 | RFM[agreement_learning]: th=0.82 res=0.354 dis=0.070 agr=141251 rel=0.903
+2025-11-02 21:00:20,738 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.903 σ=0.119 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→86.9% | 0.75→86.4% | 0.80→78.8% | 0.85→75.4%]
+2025-11-02 21:00:20,741 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.27GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 270400 preds (~413MB)
+2025-11-02 21:00:20,741 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.826 edge=0.0211 w_urn=0.972 w_beco=1.006
+2025-11-02 21:03:29,134 - dist_clip_selftrain_disagree7.py - INFO: Iter:69000 | 5:17:54 ETA:0:50:40 LR:2.750e-06 | CE:0.0210 Dice:0.8908 Cross:0.0775 Attn:0.2511 Bnd:0.0388 mAcc:0.9548 | RFM[agreement_learning]: th=0.82 res=0.603 dis=0.114 agr=190228 rel=0.929
+2025-11-02 21:03:29,134 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.929 σ=0.082 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.0% | 0.75→96.9% | 0.80→90.0% | 0.85→84.3%]
+2025-11-02 21:03:29,137 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.28GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 272000 preds (~415MB)
+2025-11-02 21:03:29,137 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.827 edge=0.0285 w_urn=0.973 w_beco=1.009
+2025-11-02 21:06:36,005 - dist_clip_selftrain_disagree7.py - INFO: Iter:69200 | 5:21:01 ETA:0:50:06 LR:2.700e-06 | CE:0.0222 Dice:0.8907 Cross:0.0789 Attn:0.2543 Bnd:0.0390 mAcc:0.8026 | RFM[agreement_learning]: th=0.82 res=0.247 dis=0.262 agr=192623 rel=0.942
+2025-11-02 21:06:36,005 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.942 σ=0.076 p50=0.986 p75=1.000 p90=1.000] PASS[0.70→98.5% | 0.75→97.8% | 0.80→95.5% | 0.85→83.6%]
+2025-11-02 21:06:36,007 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.28GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 273600 preds (~417MB)
+2025-11-02 21:06:36,007 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.827 edge=0.0181 w_urn=0.972 w_beco=1.005
+2025-11-02 21:09:44,314 - dist_clip_selftrain_disagree7.py - INFO: Iter:69400 | 5:24:09 ETA:0:49:30 LR:2.650e-06 | CE:0.0218 Dice:0.8882 Cross:0.0797 Attn:0.2516 Bnd:0.0387 mAcc:0.9140 | RFM[agreement_learning]: th=0.82 res=0.379 dis=0.139 agr=171623 rel=0.876
+2025-11-02 21:09:44,314 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.876 σ=0.105 p50=0.900 p75=0.925 p90=1.000] PASS[0.70→84.9% | 0.75→83.2% | 0.80→78.0% | 0.85→59.4%]
+2025-11-02 21:09:44,318 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.29GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 275200 preds (~420MB)
+2025-11-02 21:09:44,318 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.827 edge=0.0210 w_urn=0.973 w_beco=1.006
+2025-11-02 21:12:50,482 - dist_clip_selftrain_disagree7.py - INFO: Iter:69600 | 5:27:15 ETA:0:48:53 LR:2.600e-06 | CE:0.0216 Dice:0.8928 Cross:0.0856 Attn:0.2560 Bnd:0.0389 mAcc:0.8786 | RFM[agreement_learning]: th=0.82 res=0.309 dis=0.176 agr=105930 rel=0.936
+2025-11-02 21:12:50,482 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.936 σ=0.080 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.8% | 0.75→96.4% | 0.80→94.1% | 0.85→83.1%]
+2025-11-02 21:12:50,484 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.29GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 276800 preds (~422MB)
+2025-11-02 21:12:50,485 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.828 edge=0.0336 w_urn=0.971 w_beco=1.010
+2025-11-02 21:16:01,133 - dist_clip_selftrain_disagree7.py - INFO: Iter:69800 | 5:30:26 ETA:0:48:17 LR:2.550e-06 | CE:0.0207 Dice:0.8916 Cross:0.0784 Attn:0.2519 Bnd:0.0388 mAcc:0.9120 | RFM[agreement_learning]: th=0.82 res=0.520 dis=0.183 agr=198471 rel=0.940
+2025-11-02 21:16:01,133 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.940 σ=0.071 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.6% | 0.75→98.0% | 0.80→96.2% | 0.85→88.8%]
+2025-11-02 21:16:01,136 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.30GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 278400 preds (~425MB)
+2025-11-02 21:16:01,136 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.828 edge=0.0233 w_urn=0.978 w_beco=1.007
+2025-11-02 21:19:10,593 - dist_clip_selftrain_disagree7.py - INFO: Iter:70000 | 5:33:35 ETA:0:47:39 LR:2.500e-06 | CE:0.0191 Dice:0.8878 Cross:0.0743 Attn:0.2460 Bnd:0.0382 mAcc:0.7794 | RFM[agreement_learning]: th=0.82 res=0.167 dis=0.265 agr=123857 rel=0.925
+2025-11-02 21:19:10,593 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.925 σ=0.076 p50=0.911 p75=1.000 p90=1.000] PASS[0.70→98.6% | 0.75→97.8% | 0.80→91.4% | 0.85→83.8%]
+2025-11-02 21:19:10,596 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.31GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 280000 preds (~427MB)
+2025-11-02 21:19:10,597 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.829 edge=0.0227 w_urn=0.973 w_beco=1.007
+2025-11-02 21:19:10,597 - dist_clip_selftrain_disagree7.py - INFO: Validating...
+2025-11-02 21:39:31,827 - dist_clip_selftrain_disagree7.py - INFO: [VAL] mIoU:0.5293 pAcc:0.8659
+2025-11-02 21:39:38,079 - dist_clip_selftrain_disagree7.py - INFO: Saved: /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_iter_70000.pth
+2025-11-02 21:39:44,048 - dist_clip_selftrain_disagree7.py - INFO: 🌟 NEW BEST mIoU: 0.5293 → /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_best.pth
+2025-11-02 21:42:57,389 - dist_clip_selftrain_disagree7.py - INFO: Iter:70200 | 5:57:22 ETA:0:49:53 LR:2.450e-06 | CE:0.0220 Dice:0.8876 Cross:0.0830 Attn:0.2556 Bnd:0.0395 mAcc:0.8675 | RFM[agreement_learning]: th=0.82 res=0.217 dis=0.169 agr=267790 rel=0.867
+2025-11-02 21:42:57,389 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.867 σ=0.114 p50=0.888 p75=0.978 p90=1.000] PASS[0.70→82.8% | 0.75→78.7% | 0.80→74.8% | 0.85→51.1%]
+2025-11-02 21:42:57,392 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 281600 preds (~430MB)
+2025-11-02 21:42:57,392 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.829 edge=0.0231 w_urn=0.958 w_beco=1.007
+2025-11-02 21:45:52,333 - dist_clip_selftrain_disagree7.py - INFO: Iter:70400 | 6:00:17 ETA:0:49:07 LR:2.400e-06 | CE:0.0211 Dice:0.8875 Cross:0.0787 Attn:0.2575 Bnd:0.0390 mAcc:0.9351 | RFM[agreement_learning]: th=0.82 res=0.716 dis=0.229 agr=119462 rel=0.904
+2025-11-02 21:45:52,333 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.904 σ=0.084 p50=0.900 p75=0.998 p90=1.000] PASS[0.70→97.6% | 0.75→96.2% | 0.80→87.6% | 0.85→74.6%]
+2025-11-02 21:45:52,336 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 283200 preds (~432MB)
+2025-11-02 21:45:52,336 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.830 edge=0.0304 w_urn=0.976 w_beco=1.009
+2025-11-02 21:48:49,545 - dist_clip_selftrain_disagree7.py - INFO: Iter:70600 | 6:03:14 ETA:0:48:21 LR:2.350e-06 | CE:0.0223 Dice:0.8861 Cross:0.0793 Attn:0.2564 Bnd:0.0394 mAcc:0.7581 | RFM[agreement_learning]: th=0.82 res=0.471 dis=0.457 agr=137040 rel=0.921
+2025-11-02 21:48:49,545 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.921 σ=0.073 p50=0.938 p75=1.000 p90=1.000] PASS[0.70→98.7% | 0.75→98.0% | 0.80→96.7% | 0.85→82.8%]
+2025-11-02 21:48:49,559 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 284800 preds (~435MB)
+2025-11-02 21:48:49,560 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.830 edge=0.0214 w_urn=0.976 w_beco=1.006
+2025-11-02 21:51:45,005 - dist_clip_selftrain_disagree7.py - INFO: Iter:70800 | 6:06:10 ETA:0:47:34 LR:2.300e-06 | CE:0.0198 Dice:0.8884 Cross:0.0772 Attn:0.2477 Bnd:0.0384 mAcc:0.7136 | RFM[agreement_learning]: th=0.82 res=0.177 dis=0.348 agr=207441 rel=0.935
+2025-11-02 21:51:45,005 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.935 σ=0.086 p50=0.940 p75=1.000 p90=1.000] PASS[0.70→96.2% | 0.75→95.4% | 0.80→94.2% | 0.85→91.1%]
+2025-11-02 21:51:45,008 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 286400 preds (~437MB)
+2025-11-02 21:51:45,008 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.830 edge=0.0215 w_urn=0.966 w_beco=1.006
+2025-11-02 21:54:40,306 - dist_clip_selftrain_disagree7.py - INFO: Iter:71000 | 6:09:05 ETA:0:46:47 LR:2.250e-06 | CE:0.0215 Dice:0.8851 Cross:0.0791 Attn:0.2504 Bnd:0.0389 mAcc:0.9305 | RFM[agreement_learning]: th=0.82 res=0.646 dis=0.196 agr=177481 rel=0.909
+2025-11-02 21:54:40,306 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.909 σ=0.075 p50=0.925 p75=0.978 p90=1.000] PASS[0.70→98.4% | 0.75→97.2% | 0.80→93.6% | 0.85→76.9%]
+2025-11-02 21:54:40,309 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 288000 preds (~439MB)
+2025-11-02 21:54:40,309 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.831 edge=0.0202 w_urn=0.977 w_beco=1.006
+2025-11-02 21:57:38,661 - dist_clip_selftrain_disagree7.py - INFO: Iter:71200 | 6:12:03 ETA:0:45:59 LR:2.200e-06 | CE:0.0206 Dice:0.8875 Cross:0.0824 Attn:0.2520 Bnd:0.0390 mAcc:0.8688 | RFM[agreement_learning]: th=0.82 res=0.241 dis=0.173 agr=152097 rel=0.931
+2025-11-02 21:57:38,661 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.931 σ=0.074 p50=0.940 p75=1.000 p90=1.000] PASS[0.70→98.6% | 0.75→97.7% | 0.80→95.9% | 0.85→85.6%]
+2025-11-02 21:57:38,663 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.42GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 289600 preds (~442MB)
+2025-11-02 21:57:38,664 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.831 edge=0.0185 w_urn=0.976 w_beco=1.006
+2025-11-02 22:00:34,859 - dist_clip_selftrain_disagree7.py - INFO: Iter:71400 | 6:14:59 ETA:0:45:09 LR:2.150e-06 | CE:0.0194 Dice:0.8852 Cross:0.0781 Attn:0.2467 Bnd:0.0387 mAcc:0.8082 | RFM[agreement_learning]: th=0.82 res=0.243 dis=0.253 agr=168117 rel=0.929
+2025-11-02 22:00:34,859 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.929 σ=0.083 p50=0.940 p75=1.000 p90=1.000] PASS[0.70→98.1% | 0.75→96.6% | 0.80→93.5% | 0.85→78.7%]
+2025-11-02 22:00:34,862 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.43GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 291200 preds (~444MB)
+2025-11-02 22:00:34,862 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.832 edge=0.0181 w_urn=0.968 w_beco=1.005
+2025-11-02 22:03:29,346 - dist_clip_selftrain_disagree7.py - INFO: Iter:71600 | 6:17:54 ETA:0:44:20 LR:2.100e-06 | CE:0.0216 Dice:0.8855 Cross:0.0768 Attn:0.2478 Bnd:0.0389 mAcc:0.6782 | RFM[agreement_learning]: th=0.82 res=0.150 dis=0.379 agr=251220 rel=0.882
+2025-11-02 22:03:29,346 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.882 σ=0.092 p50=0.880 p75=0.940 p90=1.000] PASS[0.70→96.2% | 0.75→91.6% | 0.80→83.5% | 0.85→69.9%]
+2025-11-02 22:03:29,349 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.43GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 292800 preds (~447MB)
+2025-11-02 22:03:29,349 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.832 edge=0.0282 w_urn=0.956 w_beco=1.008
+2025-11-02 22:06:34,115 - dist_clip_selftrain_disagree7.py - INFO: Iter:71800 | 6:20:59 ETA:0:43:30 LR:2.050e-06 | CE:0.0195 Dice:0.8886 Cross:0.0732 Attn:0.2478 Bnd:0.0384 mAcc:0.9331 | RFM[agreement_learning]: th=0.82 res=0.574 dis=0.157 agr=234512 rel=0.906
+2025-11-02 22:06:34,115 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.906 σ=0.097 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→96.2% | 0.75→91.0% | 0.80→86.3% | 0.85→72.0%]
+2025-11-02 22:06:34,119 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.44GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 294400 preds (~449MB)
+2025-11-02 22:06:34,119 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.833 edge=0.0261 w_urn=0.951 w_beco=1.008
+2025-11-02 22:09:47,624 - dist_clip_selftrain_disagree7.py - INFO: Iter:72000 | 6:24:12 ETA:0:42:41 LR:2.000e-06 | CE:0.0218 Dice:0.8898 Cross:0.0824 Attn:0.2563 Bnd:0.0397 mAcc:0.8243 | RFM[agreement_learning]: th=0.82 res=0.160 dis=0.209 agr=329231 rel=0.912
+2025-11-02 22:09:47,624 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.912 σ=0.079 p50=0.925 p75=0.999 p90=1.000] PASS[0.70→98.1% | 0.75→96.8% | 0.80→94.5% | 0.85→74.0%]
+2025-11-02 22:09:47,628 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.44GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 296000 preds (~452MB)
+2025-11-02 22:09:47,628 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.833 edge=0.0250 w_urn=0.967 w_beco=1.007
+2025-11-02 22:12:56,741 - dist_clip_selftrain_disagree7.py - INFO: Iter:72200 | 6:27:21 ETA:0:41:50 LR:1.950e-06 | CE:0.0204 Dice:0.8872 Cross:0.0794 Attn:0.2456 Bnd:0.0389 mAcc:0.9360 | RFM[agreement_learning]: th=0.82 res=0.694 dis=0.209 agr=223573 rel=0.901
+2025-11-02 22:12:56,741 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.901 σ=0.094 p50=0.924 p75=1.000 p90=1.000] PASS[0.70→95.2% | 0.75→92.2% | 0.80→87.2% | 0.85→70.5%]
+2025-11-02 22:12:56,746 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.45GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 297600 preds (~454MB)
+2025-11-02 22:12:56,747 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.833 edge=0.0224 w_urn=0.960 w_beco=1.007
+2025-11-02 22:16:05,914 - dist_clip_selftrain_disagree7.py - INFO: Iter:72400 | 6:30:30 ETA:0:40:59 LR:1.900e-06 | CE:0.0200 Dice:0.8886 Cross:0.0734 Attn:0.2487 Bnd:0.0386 mAcc:0.9412 | RFM[agreement_learning]: th=0.82 res=0.302 dis=0.084 agr=127057 rel=0.933
+2025-11-02 22:16:05,914 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.933 σ=0.074 p50=0.940 p75=1.000 p90=1.000] PASS[0.70→98.6% | 0.75→97.4% | 0.80→95.9% | 0.85→86.4%]
+2025-11-02 22:16:05,917 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.45GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 299200 preds (~457MB)
+2025-11-02 22:16:05,917 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.834 edge=0.0201 w_urn=0.977 w_beco=1.006
+2025-11-02 22:19:13,217 - dist_clip_selftrain_disagree7.py - INFO: Iter:72600 | 6:33:38 ETA:0:40:07 LR:1.850e-06 | CE:0.0201 Dice:0.8868 Cross:0.0720 Attn:0.2480 Bnd:0.0386 mAcc:0.8844 | RFM[agreement_learning]: th=0.82 res=0.342 dis=0.176 agr=282249 rel=0.887
+2025-11-02 22:19:13,217 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.887 σ=0.105 p50=0.925 p75=0.987 p90=1.000] PASS[0.70→93.5% | 0.75→89.4% | 0.80→83.7% | 0.85→62.9%]
+2025-11-02 22:19:13,221 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.45GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 300800 preds (~459MB)
+2025-11-02 22:19:13,221 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.834 edge=0.0333 w_urn=0.958 w_beco=1.010
+2025-11-02 22:22:23,164 - dist_clip_selftrain_disagree7.py - INFO: Iter:72800 | 6:36:48 ETA:0:39:14 LR:1.800e-06 | CE:0.0201 Dice:0.8865 Cross:0.0756 Attn:0.2479 Bnd:0.0386 mAcc:0.9201 | RFM[agreement_learning]: th=0.82 res=0.565 dis=0.183 agr=394060 rel=0.899
+2025-11-02 22:22:23,164 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.899 σ=0.084 p50=0.922 p75=0.940 p90=1.000] PASS[0.70→97.2% | 0.75→95.3% | 0.80→90.3% | 0.85→72.6%]
+2025-11-02 22:22:23,167 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.46GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 302400 preds (~461MB)
+2025-11-02 22:22:23,167 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.835 edge=0.0306 w_urn=0.961 w_beco=1.009
+2025-11-02 22:25:32,453 - dist_clip_selftrain_disagree7.py - INFO: Iter:73000 | 6:39:57 ETA:0:38:21 LR:1.750e-06 | CE:0.0218 Dice:0.8861 Cross:0.0777 Attn:0.2447 Bnd:0.0392 mAcc:0.8864 | RFM[agreement_learning]: th=0.82 res=0.638 dis=0.314 agr=277879 rel=0.890
+2025-11-02 22:25:32,453 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.073 p50=0.880 p75=0.940 p90=0.999] PASS[0.70→98.2% | 0.75→97.0% | 0.80→92.5% | 0.85→72.6%]
+2025-11-02 22:25:32,457 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.46GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 304000 preds (~464MB)
+2025-11-02 22:25:32,457 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.835 edge=0.0341 w_urn=0.974 w_beco=1.010
+2025-11-02 22:28:39,275 - dist_clip_selftrain_disagree7.py - INFO: Iter:73200 | 6:43:04 ETA:0:37:26 LR:1.700e-06 | CE:0.0203 Dice:0.8873 Cross:0.0820 Attn:0.2537 Bnd:0.0388 mAcc:0.8957 | RFM[agreement_learning]: th=0.82 res=0.527 dis=0.221 agr=252911 rel=0.911
+2025-11-02 22:28:39,275 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.911 σ=0.097 p50=0.932 p75=0.998 p90=1.000] PASS[0.70→96.2% | 0.75→93.0% | 0.80→87.9% | 0.85→77.3%]
+2025-11-02 22:28:39,278 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.47GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 305600 preds (~466MB)
+2025-11-02 22:28:39,278 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.836 edge=0.0241 w_urn=0.959 w_beco=1.007
+2025-11-02 22:31:52,387 - dist_clip_selftrain_disagree7.py - INFO: Iter:73400 | 6:46:17 ETA:0:36:31 LR:1.650e-06 | CE:0.0202 Dice:0.8841 Cross:0.0789 Attn:0.2531 Bnd:0.0390 mAcc:0.9221 | RFM[agreement_learning]: th=0.82 res=0.532 dis=0.166 agr=203382 rel=0.940
+2025-11-02 22:31:52,387 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.940 σ=0.076 p50=0.954 p75=1.000 p90=1.000] PASS[0.70→98.5% | 0.75→97.6% | 0.80→95.8% | 0.85→85.1%]
+2025-11-02 22:31:52,390 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.47GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 307200 preds (~469MB)
+2025-11-02 22:31:52,390 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.836 edge=0.0252 w_urn=0.974 w_beco=1.008
+2025-11-02 22:35:01,574 - dist_clip_selftrain_disagree7.py - INFO: Iter:73600 | 6:49:26 ETA:0:35:36 LR:1.600e-06 | CE:0.0210 Dice:0.8867 Cross:0.0777 Attn:0.2488 Bnd:0.0393 mAcc:0.9151 | RFM[agreement_learning]: th=0.82 res=0.300 dis=0.121 agr=66835 rel=0.947
+2025-11-02 22:35:01,574 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.947 σ=0.077 p50=1.000 p75=1.000 p90=1.000] PASS[0.70→98.5% | 0.75→97.4% | 0.80→95.5% | 0.85→89.2%]
+2025-11-02 22:35:01,577 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.48GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 308800 preds (~471MB)
+2025-11-02 22:35:01,577 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.836 edge=0.0267 w_urn=0.976 w_beco=1.008
+2025-11-02 22:38:11,721 - dist_clip_selftrain_disagree7.py - INFO: Iter:73800 | 6:52:36 ETA:0:34:39 LR:1.550e-06 | CE:0.0213 Dice:0.8868 Cross:0.0783 Attn:0.2540 Bnd:0.0389 mAcc:0.7884 | RFM[agreement_learning]: th=0.82 res=0.389 dis=0.346 agr=206045 rel=0.908
+2025-11-02 22:38:11,721 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.908 σ=0.088 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.0% | 0.75→94.7% | 0.80→90.2% | 0.85→71.0%]
+2025-11-02 22:38:11,724 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.49GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 310400 preds (~474MB)
+2025-11-02 22:38:11,724 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.837 edge=0.0231 w_urn=0.955 w_beco=1.007
+2025-11-02 22:41:23,621 - dist_clip_selftrain_disagree7.py - INFO: Iter:74000 | 6:55:48 ETA:0:33:42 LR:1.500e-06 | CE:0.0204 Dice:0.8857 Cross:0.0765 Attn:0.2500 Bnd:0.0390 mAcc:0.7290 | RFM[agreement_learning]: th=0.82 res=0.196 dis=0.337 agr=179444 rel=0.923
+2025-11-02 22:41:23,621 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.923 σ=0.085 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.9% | 0.75→96.8% | 0.80→94.6% | 0.85→78.9%]
+2025-11-02 22:41:23,625 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.50GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 312000 preds (~476MB)
+2025-11-02 22:41:23,625 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.837 edge=0.0334 w_urn=0.974 w_beco=1.010
+2025-11-02 22:44:33,960 - dist_clip_selftrain_disagree7.py - INFO: Iter:74200 | 6:58:58 ETA:0:32:44 LR:1.450e-06 | CE:0.0201 Dice:0.8878 Cross:0.0778 Attn:0.2513 Bnd:0.0391 mAcc:0.9091 | RFM[agreement_learning]: th=0.82 res=0.691 dis=0.294 agr=270436 rel=0.911
+2025-11-02 22:44:33,960 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.911 σ=0.083 p50=0.936 p75=0.997 p90=1.000] PASS[0.70→97.3% | 0.75→95.7% | 0.80→93.0% | 0.85→78.6%]
+2025-11-02 22:44:33,962 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.50GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 313600 preds (~479MB)
+2025-11-02 22:44:33,963 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.838 edge=0.0342 w_urn=0.968 w_beco=1.010
+2025-11-02 22:47:44,197 - dist_clip_selftrain_disagree7.py - INFO: Iter:74400 | 7:02:09 ETA:0:31:46 LR:1.400e-06 | CE:0.0208 Dice:0.8867 Cross:0.0759 Attn:0.2504 Bnd:0.0389 mAcc:0.8646 | RFM[agreement_learning]: th=0.82 res=0.540 dis=0.294 agr=259455 rel=0.881
+2025-11-02 22:47:44,197 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.881 σ=0.095 p50=0.879 p75=0.940 p90=1.000] PASS[0.70→95.6% | 0.75→92.0% | 0.80→85.2% | 0.85→56.5%]
+2025-11-02 22:47:44,201 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.51GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 315200 preds (~481MB)
+2025-11-02 22:47:44,201 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.838 edge=0.0349 w_urn=0.955 w_beco=1.010
+2025-11-02 22:50:50,864 - dist_clip_selftrain_disagree7.py - INFO: Iter:74600 | 7:05:15 ETA:0:30:46 LR:1.350e-06 | CE:0.0211 Dice:0.8865 Cross:0.0787 Attn:0.2528 Bnd:0.0391 mAcc:0.8619 | RFM[agreement_learning]: th=0.82 res=0.345 dis=0.211 agr=272217 rel=0.890
+2025-11-02 22:50:50,864 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.096 p50=0.880 p75=0.995 p90=1.000] PASS[0.70→96.0% | 0.75→92.8% | 0.80→87.1% | 0.85→56.2%]
+2025-11-02 22:50:50,866 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.51GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 316800 preds (~483MB)
+2025-11-02 22:50:50,867 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.839 edge=0.0315 w_urn=0.961 w_beco=1.009
+2025-11-02 22:54:00,649 - dist_clip_selftrain_disagree7.py - INFO: Iter:74800 | 7:08:25 ETA:0:29:46 LR:1.300e-06 | CE:0.0210 Dice:0.8879 Cross:0.0785 Attn:0.2505 Bnd:0.0393 mAcc:0.8840 | RFM[agreement_learning]: th=0.82 res=0.493 dis=0.229 agr=213527 rel=0.898
+2025-11-02 22:54:00,649 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.898 σ=0.073 p50=0.880 p75=0.940 p90=0.998] PASS[0.70→98.2% | 0.75→97.1% | 0.80→95.0% | 0.85→71.3%]
+2025-11-02 22:54:00,653 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.52GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 318400 preds (~486MB)
+2025-11-02 22:54:00,653 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.839 edge=0.0306 w_urn=0.973 w_beco=1.009
+2025-11-02 22:57:09,507 - dist_clip_selftrain_disagree7.py - INFO: Iter:75000 | 7:11:34 ETA:0:28:46 LR:1.250e-06 | CE:0.0210 Dice:0.8866 Cross:0.0786 Attn:0.2509 Bnd:0.0391 mAcc:0.9360 | RFM[agreement_learning]: th=0.82 res=0.357 dis=0.100 agr=173374 rel=0.918
+2025-11-02 22:57:09,507 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.918 σ=0.081 p50=0.939 p75=1.000 p90=1.000] PASS[0.70→98.0% | 0.75→96.2% | 0.80→92.5% | 0.85→80.9%]
+2025-11-02 22:57:09,510 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.52GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 320000 preds (~488MB)
+2025-11-02 22:57:09,510 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.839 edge=0.0201 w_urn=0.970 w_beco=1.006
+2025-11-02 23:00:14,328 - dist_clip_selftrain_disagree7.py - INFO: Iter:75200 | 7:14:39 ETA:0:27:44 LR:1.200e-06 | CE:0.0210 Dice:0.8854 Cross:0.0756 Attn:0.2489 Bnd:0.0388 mAcc:0.9116 | RFM[agreement_learning]: th=0.82 res=0.510 dis=0.180 agr=113384 rel=0.937
+2025-11-02 23:00:14,328 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.937 σ=0.065 p50=0.938 p75=1.000 p90=1.000] PASS[0.70→99.1% | 0.75→98.8% | 0.80→98.0% | 0.85→85.7%]
+2025-11-02 23:00:14,330 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.53GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 321600 preds (~491MB)
+2025-11-02 23:00:14,331 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.840 edge=0.0232 w_urn=0.977 w_beco=1.007
+2025-11-02 23:03:28,333 - dist_clip_selftrain_disagree7.py - INFO: Iter:75400 | 7:17:53 ETA:0:26:42 LR:1.150e-06 | CE:0.0208 Dice:0.8859 Cross:0.0778 Attn:0.2515 Bnd:0.0391 mAcc:0.8317 | RFM[agreement_learning]: th=0.82 res=0.329 dis=0.251 agr=202840 rel=0.909
+2025-11-02 23:03:28,334 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.909 σ=0.082 p50=0.925 p75=0.994 p90=1.000] PASS[0.70→97.5% | 0.75→95.9% | 0.80→91.3% | 0.85→80.4%]
+2025-11-02 23:03:28,337 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.53GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 323200 preds (~493MB)
+2025-11-02 23:03:28,337 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.840 edge=0.0306 w_urn=0.974 w_beco=1.009
+2025-11-02 23:06:40,757 - dist_clip_selftrain_disagree7.py - INFO: Iter:75600 | 7:21:05 ETA:0:25:40 LR:1.100e-06 | CE:0.0202 Dice:0.8862 Cross:0.0753 Attn:0.2515 Bnd:0.0391 mAcc:0.9172 | RFM[agreement_learning]: th=0.82 res=0.617 dis=0.216 agr=202371 rel=0.894
+2025-11-02 23:06:40,758 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.894 σ=0.080 p50=0.920 p75=0.938 p90=1.000] PASS[0.70→98.0% | 0.75→95.5% | 0.80→91.5% | 0.85→60.4%]
+2025-11-02 23:06:40,760 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.54GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 324800 preds (~496MB)
+2025-11-02 23:06:40,760 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.841 edge=0.0199 w_urn=0.967 w_beco=1.006
+2025-11-02 23:09:49,015 - dist_clip_selftrain_disagree7.py - INFO: Iter:75800 | 7:24:14 ETA:0:24:36 LR:1.050e-06 | CE:0.0198 Dice:0.8863 Cross:0.0798 Attn:0.2514 Bnd:0.0391 mAcc:0.7884 | RFM[agreement_learning]: th=0.82 res=0.421 dis=0.365 agr=158280 rel=0.889
+2025-11-02 23:09:49,015 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.889 σ=0.090 p50=0.880 p75=0.940 p90=1.000] PASS[0.70→96.3% | 0.75→93.2% | 0.80→86.8% | 0.85→71.3%]
+2025-11-02 23:09:49,017 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.54GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 326400 preds (~498MB)
+2025-11-02 23:09:49,017 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.841 edge=0.0379 w_urn=0.958 w_beco=1.011
+2025-11-02 23:12:54,676 - dist_clip_selftrain_disagree7.py - INFO: Iter:76000 | 7:27:19 ETA:0:23:32 LR:1.000e-06 | CE:0.0206 Dice:0.8864 Cross:0.0754 Attn:0.2485 Bnd:0.0389 mAcc:0.9193 | RFM[agreement_learning]: th=0.82 res=0.568 dis=0.187 agr=167302 rel=0.917
+2025-11-02 23:12:54,676 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.917 σ=0.087 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.6% | 0.75→96.1% | 0.80→92.8% | 0.85→80.5%]
+2025-11-02 23:12:54,679 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.55GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 328000 preds (~500MB)
+2025-11-02 23:12:54,679 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.841 edge=0.0297 w_urn=0.969 w_beco=1.009
+2025-11-02 23:16:00,045 - dist_clip_selftrain_disagree7.py - INFO: Iter:76200 | 7:30:25 ETA:0:22:27 LR:9.502e-07 | CE:0.0208 Dice:0.8853 Cross:0.0748 Attn:0.2460 Bnd:0.0390 mAcc:0.8569 | RFM[agreement_learning]: th=0.82 res=0.522 dis=0.299 agr=238581 rel=0.890
+2025-11-02 23:16:00,045 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.077 p50=0.900 p75=0.926 p90=1.000] PASS[0.70→97.6% | 0.75→95.5% | 0.80→88.9% | 0.85→66.4%]
+2025-11-02 23:16:00,049 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.55GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 329600 preds (~503MB)
+2025-11-02 23:16:00,050 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.842 edge=0.0221 w_urn=0.966 w_beco=1.007
+2025-11-02 23:19:08,820 - dist_clip_selftrain_disagree7.py - INFO: Iter:76400 | 7:33:33 ETA:0:21:22 LR:9.003e-07 | CE:0.0208 Dice:0.8867 Cross:0.0784 Attn:0.2522 Bnd:0.0393 mAcc:0.9082 | RFM[agreement_learning]: th=0.82 res=0.475 dis=0.175 agr=205271 rel=0.902
+2025-11-02 23:19:08,821 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.902 σ=0.082 p50=0.920 p75=0.982 p90=1.000] PASS[0.70→97.8% | 0.75→95.8% | 0.80→92.1% | 0.85→67.4%]
+2025-11-02 23:19:08,823 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.56GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 331200 preds (~505MB)
+2025-11-02 23:19:08,823 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.842 edge=0.0297 w_urn=0.963 w_beco=1.009
+2025-11-02 23:22:23,160 - dist_clip_selftrain_disagree7.py - INFO: Iter:76600 | 7:36:48 ETA:0:20:16 LR:8.502e-07 | CE:0.0212 Dice:0.8861 Cross:0.0790 Attn:0.2587 Bnd:0.0397 mAcc:0.8746 | RFM[agreement_learning]: th=0.82 res=0.639 dis=0.347 agr=176505 rel=0.874
+2025-11-02 23:22:23,160 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.874 σ=0.088 p50=0.864 p75=0.925 p90=0.999] PASS[0.70→95.9% | 0.75→93.0% | 0.80→86.3% | 0.85→51.5%]
+2025-11-02 23:22:23,163 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.56GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 332800 preds (~508MB)
+2025-11-02 23:22:23,163 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.843 edge=0.0354 w_urn=0.956 w_beco=1.011
+2025-11-02 23:25:34,269 - dist_clip_selftrain_disagree7.py - INFO: Iter:76800 | 7:39:59 ETA:0:19:09 LR:8.003e-07 | CE:0.0202 Dice:0.8871 Cross:0.0726 Attn:0.2518 Bnd:0.0389 mAcc:0.8647 | RFM[agreement_learning]: th=0.82 res=0.546 dis=0.298 agr=194508 rel=0.886
+2025-11-02 23:25:34,269 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.886 σ=0.088 p50=0.880 p75=0.940 p90=1.000] PASS[0.70→96.3% | 0.75→93.3% | 0.80→88.0% | 0.85→72.1%]
+2025-11-02 23:25:34,272 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.57GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 334400 preds (~510MB)
+2025-11-02 23:25:34,272 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.843 edge=0.0338 w_urn=0.971 w_beco=1.010
+2025-11-02 23:28:42,220 - dist_clip_selftrain_disagree7.py - INFO: Iter:77000 | 7:43:07 ETA:0:18:02 LR:7.502e-07 | CE:0.0211 Dice:0.8857 Cross:0.0770 Attn:0.2446 Bnd:0.0390 mAcc:0.8206 | RFM[agreement_learning]: th=0.82 res=0.216 dis=0.229 agr=186666 rel=0.913
+2025-11-02 23:28:42,220 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.913 σ=0.083 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.3% | 0.75→96.6% | 0.80→91.3% | 0.85→79.9%]
+2025-11-02 23:28:42,223 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.58GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 336000 preds (~513MB)
+2025-11-02 23:28:42,224 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.844 edge=0.0290 w_urn=0.961 w_beco=1.009
+2025-11-02 23:31:53,157 - dist_clip_selftrain_disagree7.py - INFO: Iter:77200 | 7:46:18 ETA:0:16:54 LR:7.003e-07 | CE:0.0214 Dice:0.8877 Cross:0.0795 Attn:0.2533 Bnd:0.0392 mAcc:0.7910 | RFM[agreement_learning]: th=0.82 res=0.339 dis=0.316 agr=215460 rel=0.886
+2025-11-02 23:31:53,157 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.886 σ=0.095 p50=0.880 p75=0.940 p90=1.000] PASS[0.70→95.6% | 0.75→92.3% | 0.80→86.5% | 0.85→60.6%]
+2025-11-02 23:31:53,160 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.58GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 337600 preds (~515MB)
+2025-11-02 23:31:53,160 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.844 edge=0.0322 w_urn=0.969 w_beco=1.010
+2025-11-02 23:35:01,070 - dist_clip_selftrain_disagree7.py - INFO: Iter:77400 | 7:49:26 ETA:0:15:46 LR:6.503e-07 | CE:0.0203 Dice:0.8872 Cross:0.0740 Attn:0.2493 Bnd:0.0389 mAcc:0.6786 | RFM[agreement_learning]: th=0.82 res=0.136 dis=0.372 agr=155855 rel=0.901
+2025-11-02 23:35:01,070 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.901 σ=0.079 p50=0.899 p75=0.968 p90=1.000] PASS[0.70→98.5% | 0.75→97.7% | 0.80→95.4% | 0.85→66.6%]
+2025-11-02 23:35:01,072 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.58GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 339200 preds (~518MB)
+2025-11-02 23:35:01,072 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.844 edge=0.0231 w_urn=0.977 w_beco=1.007
+2025-11-02 23:38:08,432 - dist_clip_selftrain_disagree7.py - INFO: Iter:77600 | 7:52:33 ETA:0:14:36 LR:6.002e-07 | CE:0.0207 Dice:0.8877 Cross:0.0788 Attn:0.2507 Bnd:0.0393 mAcc:0.8879 | RFM[agreement_learning]: th=0.82 res=0.436 dis=0.199 agr=148883 rel=0.911
+2025-11-02 23:38:08,433 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.911 σ=0.085 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→97.7% | 0.75→96.5% | 0.80→91.0% | 0.85→66.9%]
+2025-11-02 23:38:08,435 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.59GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 340800 preds (~520MB)
+2025-11-02 23:38:08,436 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.845 edge=0.0258 w_urn=0.975 w_beco=1.008
+2025-11-02 23:41:16,053 - dist_clip_selftrain_disagree7.py - INFO: Iter:77800 | 7:55:41 ETA:0:13:27 LR:5.503e-07 | CE:0.0198 Dice:0.8871 Cross:0.0739 Attn:0.2479 Bnd:0.0391 mAcc:0.9742 | RFM[agreement_learning]: th=0.82 res=0.541 dis=0.056 agr=118789 rel=0.942
+2025-11-02 23:41:16,053 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.942 σ=0.075 p50=0.967 p75=1.000 p90=1.000] PASS[0.70→98.7% | 0.75→97.5% | 0.80→94.7% | 0.85→88.5%]
+2025-11-02 23:41:16,057 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.60GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 342400 preds (~522MB)
+2025-11-02 23:41:16,057 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.845 edge=0.0169 w_urn=0.977 w_beco=1.005
+2025-11-02 23:44:26,603 - dist_clip_selftrain_disagree7.py - INFO: Iter:78000 | 7:58:51 ETA:0:12:16 LR:5.002e-07 | CE:0.0208 Dice:0.8876 Cross:0.0768 Attn:0.2529 Bnd:0.0390 mAcc:0.7835 | RFM[agreement_learning]: th=0.82 res=0.516 dis=0.447 agr=140026 rel=0.891
+2025-11-02 23:44:26,603 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.891 σ=0.092 p50=0.891 p75=0.940 p90=1.000] PASS[0.70→94.4% | 0.75→91.7% | 0.80→88.7% | 0.85→76.1%]
+2025-11-02 23:44:26,606 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.60GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 344000 preds (~525MB)
+2025-11-02 23:44:26,606 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.846 edge=0.0193 w_urn=0.951 w_beco=1.006
+2025-11-02 23:47:37,214 - dist_clip_selftrain_disagree7.py - INFO: Iter:78200 | 8:02:02 ETA:0:11:05 LR:4.503e-07 | CE:0.0212 Dice:0.8882 Cross:0.0758 Attn:0.2573 Bnd:0.0393 mAcc:0.9088 | RFM[agreement_learning]: th=0.82 res=0.289 dis=0.128 agr=257254 rel=0.893
+2025-11-02 23:47:37,214 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.893 σ=0.084 p50=0.917 p75=0.940 p90=1.000] PASS[0.70→97.5% | 0.75→95.5% | 0.80→89.4% | 0.85→71.1%]
+2025-11-02 23:47:37,218 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.61GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 345600 preds (~527MB)
+2025-11-02 23:47:37,218 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.846 edge=0.0263 w_urn=0.962 w_beco=1.008
+2025-11-02 23:50:47,864 - dist_clip_selftrain_disagree7.py - INFO: Iter:78400 | 8:05:12 ETA:0:09:54 LR:4.002e-07 | CE:0.0216 Dice:0.8874 Cross:0.0802 Attn:0.2542 Bnd:0.0393 mAcc:0.8775 | RFM[agreement_learning]: th=0.82 res=0.494 dis=0.242 agr=191376 rel=0.918
+2025-11-02 23:50:47,864 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.918 σ=0.080 p50=0.925 p75=1.000 p90=1.000] PASS[0.70→98.2% | 0.75→97.2% | 0.80→95.2% | 0.85→77.8%]
+2025-11-02 23:50:47,867 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.61GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 347200 preds (~530MB)
+2025-11-02 23:50:47,867 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.847 edge=0.0297 w_urn=0.976 w_beco=1.009
+2025-11-02 23:53:56,256 - dist_clip_selftrain_disagree7.py - INFO: Iter:78600 | 8:08:21 ETA:0:08:41 LR:3.503e-07 | CE:0.0216 Dice:0.8868 Cross:0.0779 Attn:0.2442 Bnd:0.0395 mAcc:0.8676 | RFM[agreement_learning]: th=0.82 res=0.440 dis=0.236 agr=270301 rel=0.890
+2025-11-02 23:53:56,256 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.890 σ=0.092 p50=0.896 p75=0.940 p90=1.000] PASS[0.70→96.7% | 0.75→92.0% | 0.80→86.4% | 0.85→66.3%]
+2025-11-02 23:53:56,259 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.62GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 348800 preds (~532MB)
+2025-11-02 23:53:56,259 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.847 edge=0.0327 w_urn=0.952 w_beco=1.010
+2025-11-02 23:57:06,396 - dist_clip_selftrain_disagree7.py - INFO: Iter:78800 | 8:11:31 ETA:0:07:29 LR:3.002e-07 | CE:0.0216 Dice:0.8868 Cross:0.0775 Attn:0.2503 Bnd:0.0391 mAcc:0.8409 | RFM[agreement_learning]: th=0.82 res=0.115 dis=0.180 agr=195323 rel=0.920
+2025-11-02 23:57:06,396 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.920 σ=0.077 p50=0.940 p75=0.999 p90=1.000] PASS[0.70→98.4% | 0.75→96.6% | 0.80→93.4% | 0.85→83.6%]
+2025-11-02 23:57:06,400 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.63GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 350400 preds (~535MB)
+2025-11-02 23:57:06,401 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.847 edge=0.0178 w_urn=0.958 w_beco=1.005
+2025-11-03 00:00:13,823 - dist_clip_selftrain_disagree7.py - INFO: Iter:79000 | 8:14:38 ETA:0:06:15 LR:2.503e-07 | CE:0.0204 Dice:0.8853 Cross:0.0712 Attn:0.2466 Bnd:0.0389 mAcc:0.9250 | RFM[agreement_learning]: th=0.82 res=0.636 dis=0.206 agr=259175 rel=0.895
+2025-11-03 00:00:13,823 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.895 σ=0.087 p50=0.903 p75=0.940 p90=1.000] PASS[0.70→96.4% | 0.75→94.6% | 0.80→90.5% | 0.85→67.1%]
+2025-11-03 00:00:13,827 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.63GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 352000 preds (~537MB)
+2025-11-03 00:00:13,827 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.848 edge=0.0280 w_urn=0.968 w_beco=1.008
+2025-11-03 00:03:23,871 - dist_clip_selftrain_disagree7.py - INFO: Iter:79200 | 8:17:48 ETA:0:05:01 LR:2.002e-07 | CE:0.0210 Dice:0.8865 Cross:0.0796 Attn:0.2530 Bnd:0.0393 mAcc:0.8589 | RFM[agreement_learning]: th=0.82 res=0.527 dis=0.298 agr=207385 rel=0.891
+2025-11-03 00:03:23,871 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.891 σ=0.081 p50=0.899 p75=0.925 p90=1.000] PASS[0.70→97.3% | 0.75→94.6% | 0.80→89.6% | 0.85→63.9%]
+2025-11-03 00:03:23,874 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.63GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 353600 preds (~540MB)
+2025-11-03 00:03:23,874 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.848 edge=0.0264 w_urn=0.967 w_beco=1.008
+2025-11-03 00:06:31,543 - dist_clip_selftrain_disagree7.py - INFO: Iter:79400 | 8:20:56 ETA:0:03:47 LR:1.503e-07 | CE:0.0205 Dice:0.8889 Cross:0.0801 Attn:0.2504 Bnd:0.0387 mAcc:0.9185 | RFM[agreement_learning]: th=0.82 res=0.399 dis=0.135 agr=283660 rel=0.907
+2025-11-03 00:06:31,543 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.907 σ=0.081 p50=0.900 p75=1.000 p90=1.000] PASS[0.70→98.1% | 0.75→96.4% | 0.80→92.3% | 0.85→78.9%]
+2025-11-03 00:06:31,545 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.64GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 355200 preds (~542MB)
+2025-11-03 00:06:31,545 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.849 edge=0.0211 w_urn=0.964 w_beco=1.006
+2025-11-03 00:09:39,007 - dist_clip_selftrain_disagree7.py - INFO: Iter:79600 | 8:24:04 ETA:0:02:31 LR:1.002e-07 | CE:0.0213 Dice:0.8868 Cross:0.0782 Attn:0.2549 Bnd:0.0393 mAcc:0.9430 | RFM[agreement_learning]: th=0.82 res=0.472 dis=0.108 agr=272545 rel=0.900
+2025-11-03 00:09:39,007 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.900 σ=0.085 p50=0.880 p75=1.000 p90=1.000] PASS[0.70→98.1% | 0.75→96.6% | 0.80→89.9% | 0.85→71.8%]
+2025-11-03 00:09:39,010 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.65GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 356800 preds (~544MB)
+2025-11-03 00:09:39,010 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.849 edge=0.0212 w_urn=0.967 w_beco=1.006
+2025-11-03 00:12:45,631 - dist_clip_selftrain_disagree7.py - INFO: Iter:79800 | 8:27:10 ETA:0:01:16 LR:5.025e-08 | CE:0.0213 Dice:0.8876 Cross:0.0792 Attn:0.2511 Bnd:0.0386 mAcc:0.7220 | RFM[agreement_learning]: th=0.82 res=0.179 dis=0.339 agr=133156 rel=0.886
+2025-11-03 00:12:45,631 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.886 σ=0.095 p50=0.880 p75=1.000 p90=1.000] PASS[0.70→96.0% | 0.75→91.8% | 0.80→84.8% | 0.85→61.1%]
+2025-11-03 00:12:45,634 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.65GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 358400 preds (~547MB)
+2025-11-03 00:12:45,634 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.850 edge=0.0218 w_urn=0.946 w_beco=1.007
+2025-11-03 00:15:55,306 - dist_clip_selftrain_disagree7.py - INFO: Iter:80000 | 8:30:20 ETA:0:00:00 LR:2.500e-10 | CE:0.0214 Dice:0.8859 Cross:0.0783 Attn:0.2512 Bnd:0.0393 mAcc:0.7903 | RFM[agreement_learning]: th=0.82 res=0.191 dis=0.259 agr=145439 rel=0.901
+2025-11-03 00:15:55,306 - dist_clip_selftrain_disagree7.py - INFO:   REL[μ=0.901 σ=0.076 p50=0.900 p75=0.940 p90=1.000] PASS[0.70→98.0% | 0.75→97.0% | 0.80→93.1% | 0.85→74.8%]
+2025-11-03 00:15:55,308 - dist_clip_selftrain_disagree7.py - INFO:   MEM: CPU=4.65GB GPU=1.91GB (reserved=7.16GB, peak=5.09GB) | Buffer: 82081 imgs, 360000 preds (~549MB)
+2025-11-03 00:15:55,309 - dist_clip_selftrain_disagree7.py - INFO:   URN/BECO: gamma=0.850 edge=0.0324 w_urn=0.979 w_beco=1.010
+2025-11-03 00:15:55,309 - dist_clip_selftrain_disagree7.py - INFO: Validating...
+2025-11-03 00:36:16,751 - dist_clip_selftrain_disagree7.py - INFO: [VAL] mIoU:0.5307 pAcc:0.8677
+2025-11-03 00:36:25,014 - dist_clip_selftrain_disagree7.py - INFO: Saved: /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_iter_80000.pth
+2025-11-03 00:36:32,691 - dist_clip_selftrain_disagree7.py - INFO: 🌟 NEW BEST mIoU: 0.5307 → /workspace3/results/weclip_selftrain7_test3/checkpoints/2025-11-02-15-45/wetr_best.pth

@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Refined pseudo-label 기반 약지도 시맨틱 segmentation. COCO-Val 56.2% mIoU SOTA (WeCLIP+ baseline 대비 +4.3pp).
+Refined pseudo-label 기반 약지도 시맨틱 segmentation. COCO-Val 54.4% mIoU (ViT-B/16), WeCLIP+ baseline 대비 +2.5pp.
 
 [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) 기반. CVPR 2024 WeCLIP의 저널 확장판. 이 repo는 RFM (Region Feature Matching) refinement 단계와 disagreement-aware self-training loop를 추가해서 COCO / VOC pseudo-label 품질을 끌어올림.
 
@@ -13,7 +13,7 @@ Refined pseudo-label 기반 약지도 시맨틱 segmentation. COCO-Val 56.2% mIo
 
 - 입력: 이미지 + class label (픽셀 마스크 X)
 - 출력: downstream 시맨틱 segmentation 학습용 refined per-pixel pseudo-label
-- 효과: COCO-Val에서 WeCLIP+ 80K-iter baseline 대비 +4.3pp mIoU (51.9 → 56.2), 오리지널 WeCLIP 대비 +9.1pp (47.1 → 56.2)
+- 효과: COCO-Val에서 WeCLIP+ baseline 대비 +2.5pp mIoU (51.9 → 54.4), 오리지널 WeCLIP 대비 +7.3pp (47.1 → 54.4). 전부 ViT-B/16.
 
 ## Approach
 
@@ -33,17 +33,19 @@ Refined pseudo-label 기반 약지도 시맨틱 segmentation. COCO-Val 56.2% mIo
    Final pseudo-labels → segmentation training
 ```
 
-## Results (COCO-Val)
+## Results (COCO-Val, ViT-B/16)
 
 | Method | mIoU |
 |--------|------|
 | WeCLIP (CVPR 2024) | 47.1 |
-| WeCLIP+ 80K-iter baseline (fair comparison) | 51.9 |
-| **Ours (RFM + Self-Train)** | **56.2** |
+| WeCLIP+ (TPAMI 2025) | 51.9 |
+| **Ours (RFM + Self-Train)** | **54.4** |
 
-WeCLIP+ 80K baseline 대비 +4.3pp, 오리지널 WeCLIP 대비 +9.1pp.
+WeCLIP+ 대비 +2.5pp, WeCLIP 대비 +7.3pp.
 
-80K-iter cutoff는 공정 비교용. WeCLIP+ TPAMI 확장판은 더 긴 스케줄로 더 높은 숫자를 보고함.
+Training progression: iter 60k 51.92 → 70k 52.93 → 80k 53.07 → 최종 eval 54.36.
+
+전체 log: [`results/training.log`](./results/training.log), [`results/eval.log`](./results/eval.log).
 
 ## Repository layout
 

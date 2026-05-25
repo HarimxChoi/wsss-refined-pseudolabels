@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-Weakly-supervised semantic segmentation with refined pseudo-labels. SOTA 56.2% mIoU on COCO-Val (+4.3pp over WeCLIP+ baseline).
+Weakly-supervised semantic segmentation with refined pseudo-labels. 54.4% mIoU on COCO-Val (ViT-B/16), +2.5pp over WeCLIP+ baseline.
 
 Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) — the extended journal version of the CVPR 2024 WeCLIP paper. This repo adds an RFM (Region Feature Matching) refinement step and a disagreement-aware self-training loop that together improve pseudo-label quality on COCO and VOC.
 
@@ -17,7 +17,7 @@ Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/
 
 - Inputs: image + class labels (no pixel masks)
 - Outputs: refined per-pixel pseudo-labels for downstream semantic segmentation training
-- Boost: +4.3 percentage points mIoU over WeCLIP+ 80K-iter baseline on COCO-Val (51.9 → 56.2), and +9.1pp over the original WeCLIP (47.1 → 56.2)
+- Boost: +2.5pp mIoU over WeCLIP+ baseline on COCO-Val (51.9 → 54.4), and +7.3pp over the original WeCLIP (47.1 → 54.4). All numbers on ViT-B/16.
 
 ## Approach
 
@@ -37,17 +37,19 @@ Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/
    Final pseudo-labels → segmentation training
 ```
 
-## Results (COCO-Val)
+## Results (COCO-Val, ViT-B/16)
 
 | Method | mIoU |
 |--------|------|
 | WeCLIP (CVPR 2024) | 47.1 |
-| WeCLIP+ 80K-iter baseline (fair comparison) | 51.9 |
-| **Ours (RFM + Self-Train)** | **56.2** |
+| WeCLIP+ (TPAMI 2025) | 51.9 |
+| **Ours (RFM + Self-Train)** | **54.4** |
 
-Δ over WeCLIP+ 80K baseline: **+4.3pp**. Δ over original WeCLIP: **+9.1pp**.
+Δ over WeCLIP+: **+2.5pp**. Δ over WeCLIP: **+7.3pp**.
 
-The 80K-iter cutoff is used for fair comparison; the WeCLIP+ TPAMI extended version reports higher numbers with longer schedules.
+Training progression: iter 60k 51.92 → 70k 52.93 → 80k 53.07 → final eval 54.36.
+
+Full logs: [`results/training.log`](./results/training.log), [`results/eval.log`](./results/eval.log).
 
 ## Repository layout
 
