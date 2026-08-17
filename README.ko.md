@@ -1,87 +1,81 @@
-# wsss-refined-pseudolabels
+# 약지도 시맨틱 세그멘테이션
 
 [English](./README.md) | 한국어
 
-Refined pseudo-label 기반 약지도 시맨틱 segmentation. COCO-Val 54.4% mIoU (ViT-B/16), WeCLIP+ baseline 대비 +2.5pp.
-
-[WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) 기반. CVPR 2024 WeCLIP의 저널 확장판. 이 repo는 RFM (Region Feature Matching) refinement 단계와 disagreement-aware self-training loop를 추가해서 COCO / VOC pseudo-label 품질을 끌어올림.
+WeCLIP+의 성능 개선을 목표로 수행한 WSSS 연구용역입니다. **COCO-Val 2014 전체 40,137개 이미지에서 mIoU 53.31%, WeCLIP+ ViT-B/16의 51.8% 대비 +1.5%p**를 기록했습니다.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-## What it does
+![모델 구조](./architecture.png)
 
-- 입력: 이미지 + class label (픽셀 마스크 X)
-- 출력: downstream 시맨틱 segmentation 학습용 refined per-pixel pseudo-label
-- 효과: COCO-Val에서 WeCLIP+ baseline 대비 +2.5pp mIoU (51.9 → 54.4), 오리지널 WeCLIP 대비 +7.3pp (47.1 → 54.4). 전부 ViT-B/16.
+## Why
 
-## Approach
+약지도 시맨틱 세그멘테이션은 픽셀 마스크 없이 이미지 단위의 class label만으로 영역을 학습합니다. 학습 과정에서 자동 생성한 pseudo-mask를 사용하기 때문에 객체 경계와 배경의 잘못된 픽셀이 다음 학습에 계속 누적될 수 있습니다. 따라서 신뢰하기 어려운 픽셀만 찾아 복원하고, 수정한 마스크를 다시 학습에 사용하는 방법이 필요했습니다.
 
+## How
+
+CLIP ViT-B/16과 DINOv2 encoder는 고정하고, 서로 다른 표현을 결합하는 fusion head와 decoder를 학습했습니다. 두 표현이 다르게 판단한 픽셀을 불신뢰 영역으로 정의해 pseudo-label을 복원한 뒤, 수정한 pseudo-mask를 self-training에 다시 사용했습니다. Foundation encoder 전체를 fine-tuning하지 않고 불확실한 영역의 학습에 집중한 구조입니다.
+
+## Result
+
+| Method | 평가 데이터 | mIoU |
+|---|---:|---:|
+| WeCLIP+ ViT-B/16 | COCO-Val 2014 | 51.8% |
+| **Refined pseudo-label model** | **전체 40,137개 이미지** | **53.31%** |
+
+전체 평가셋 기준으로 WeCLIP+ 대비 mIoU를 **1.5%p** 높였습니다.
+
+## Technical flow
+
+```text
+이미지 + 이미지 단위 class label
+        |
+        v
+Frozen CLIP + DINOv2 encoder
+        |
+        v
+Fusion head + segmentation decoder
+        |
+        v
+표현이 불일치하는 불신뢰 픽셀 탐지
+        |
+        v
+Pseudo-mask 복원 -> Self-training
 ```
-[image + class labels]
-        |
-        v
-   WeCLIP+ baseline   ── initial pseudo-labels (CAM + attention)
-        |
-        v
-   RFM refinement     ── region-feature matching aligns labels with CLIP semantics
-        |
-        v
-   Self-training loop ── disagreement-aware: refined labels supervise a student, which sharpens labels in the next pass
-        |
-        v
-   Final pseudo-labels → segmentation training
-```
 
-## Results (COCO-Val, ViT-B/16)
-
-| Method | mIoU |
-|--------|------|
-| WeCLIP (CVPR 2024) | 47.1 |
-| WeCLIP+ (TPAMI 2025) | 51.9 |
-| **Ours (RFM + Self-Train)** | **54.4** |
-
-WeCLIP+ 대비 +2.5pp, WeCLIP 대비 +7.3pp.
-
-Training progression: iter 60k 51.92 → 70k 52.93 → 80k 53.07 → 최종 eval 54.36.
-
-전체 log: [`results/training.log`](./results/training.log), [`results/eval.log`](./results/eval.log).
+구현은 [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP)를 기반으로 합니다. WeCLIP+는 CVPR 2024 WeCLIP의 저널 확장 연구입니다.
 
 ## Repository layout
 
-```
-WeCLIP_Plus/                # WeCLIP+ base models + attention-affinity variants
-  PAR.py, segformer_head.py, model_attn_aff_*.py, Decoder/
-
-clip/                       # CLIP library + tooling
-datasets/                   # COCO / VOC loaders
-configs/                    # YAML training configs (coco_*, voc_*)
-utils/                      # AverageMeter, camutils, dcrf, evaluate, imutils, losses, optimizer
-scripts/                    # WeCLIP+ training scripts + designed variants
-test_msc_flip_coco.py       # COCO evaluation
-test_msc_flip_voc.py        # VOC evaluation
-test_msc_flip_seg.py        # generic segmentation eval
-environment.yaml            # conda env
+```text
+WeCLIP_Plus/                # WeCLIP+ 모델, decoder, attention-affinity variant
+clip/                       # CLIP library와 CAM 도구
+datasets/                   # COCO와 VOC loader
+configs/                    # 학습 및 평가 config
+scripts/                    # 분산 학습 경로와 designed variant
+utils/                      # Loss, optimization, evaluation, image utility
+test_msc_flip_coco.py       # COCO multi-scale/flip 평가
+test_msc_flip_voc.py        # VOC multi-scale/flip 평가
+environment.yaml            # Conda 환경
 ```
 
-## Quick Start
+## Quick start
 
 ```bash
 conda env create -f environment.yaml
 conda activate weclip-plus
 
-# WeCLIP+ baseline training (COCO)
+# 공개된 WeCLIP+ integration 학습
 python scripts/dist_clip_coco.py --config configs/coco_attn_reg.yaml
 
-# Evaluation
+# Checkpoint 평가
 python test_msc_flip_coco.py --config configs/coco_attn_reg.yaml --weights <path>
 ```
 
-## Repository note
+## Public repository scope
 
-이 repo가 제공하는 것: WeCLIP+ baseline 통합, 모델 아키텍처, config, 평가 파이프라인, designed-variant 스크립트. **핵심 메서드 2개 (RFM refinement 단계, disagreement-aware self-training loop)는 이번 public release에서 의도적으로 제외.** 알고리즘은 함께 제출한 페이퍼에 기술. preprint 공개 시점에 맞춰 릴리스 예정.
-
-`configs/coco_rfm_ts.yaml`과 `configs/coco_selftrain.yaml`은 하이퍼파라미터 구조만 노출. 대응되는 스크립트 / 모듈 (`scripts/dist_rfm_ts.py`, `scripts/dist_clip_selftrain_disagree.py`, `scripts/rfm_disagree.py`, `WeCLIP_Plus/model_rfm_ts_coco.py`)은 비공개.
+이 저장소에는 baseline integration, 모델 구조, config, 평가 경로와 designed-variant script가 포함되어 있습니다. 연구용역에 사용한 학습 데이터, 학습 checkpoint와 최종 refinement 구현은 공개 범위에 포함하지 않았습니다.
 
 ## License
 

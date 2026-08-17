@@ -1,91 +1,81 @@
-# wsss-refined-pseudolabels
+# Weakly Supervised Semantic Segmentation
 
 English | [한국어](./README.ko.md)
 
-Weakly-supervised semantic segmentation with refined pseudo-labels. 54.4% mIoU on COCO-Val (ViT-B/16), +2.5pp over WeCLIP+ baseline.
-
-Built on top of [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP) — the extended journal version of the CVPR 2024 WeCLIP paper. This repo adds an RFM (Region Feature Matching) refinement step and a disagreement-aware self-training loop that together improve pseudo-label quality on COCO and VOC.
+Commissioned WSSS research to improve WeCLIP+: **53.31% mIoU on all 40,137 COCO-Val 2014 images, +1.5 percentage points over WeCLIP+ ViT-B/16 at 51.8%**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ![Architecture](./architecture.png)
 
-*WeCLIP+ baseline + our RFM (Region Feature Matching) refinement (pink box) + disagreement-aware self-training loop. RFM generates region-level reliability scores from inter-block attention disagreement to refine pseudo-labels.*
+## Why
 
-## What it does
+Weakly supervised semantic segmentation learns pixel-level predictions from image-level class labels. Because no ground-truth masks are available during training, errors in automatically generated pseudo-masks can accumulate around object boundaries and background regions. The project therefore focused on finding only the unreliable pixels, repairing them, and returning the corrected masks to training.
 
-- Inputs: image + class labels (no pixel masks)
-- Outputs: refined per-pixel pseudo-labels for downstream semantic segmentation training
-- Boost: +2.5pp mIoU over WeCLIP+ baseline on COCO-Val (51.9 → 54.4), and +7.3pp over the original WeCLIP (47.1 → 54.4). All numbers on ViT-B/16.
+## How
 
-## Approach
+The CLIP ViT-B/16 and DINOv2 encoders remain frozen. A fusion head and decoder learn from their complementary representations. Pixels where the two representations disagree are treated as unreliable, repaired through pseudo-label refinement, and reused in self-training. This concentrates learning on uncertain regions without fine-tuning the foundation encoders.
 
+## Result
+
+| Method | Evaluation set | mIoU |
+|---|---:|---:|
+| WeCLIP+ ViT-B/16 | COCO-Val 2014 | 51.8% |
+| **Refined pseudo-label model** | **40,137 images** | **53.31%** |
+
+The final full-set evaluation improved mIoU by **1.5 percentage points** over WeCLIP+.
+
+## Technical flow
+
+```text
+Image + image-level labels
+        |
+        v
+Frozen CLIP + DINOv2 encoders
+        |
+        v
+Fusion head + segmentation decoder
+        |
+        v
+Disagreement-based unreliable-pixel detection
+        |
+        v
+Pseudo-mask repair -> self-training
 ```
-[image + class labels]
-        |
-        v
-   WeCLIP+ baseline   ── initial pseudo-labels (CAM + attention)
-        |
-        v
-   RFM refinement     ── region-feature matching aligns labels with CLIP semantics
-        |
-        v
-   Self-training loop ── disagreement-aware: refined labels supervise a student, which sharpens labels in the next pass
-        |
-        v
-   Final pseudo-labels → segmentation training
-```
 
-## Results (COCO-Val, ViT-B/16)
-
-| Method | mIoU |
-|--------|------|
-| WeCLIP (CVPR 2024) | 47.1 |
-| WeCLIP+ (TPAMI 2025) | 51.9 |
-| **Ours (RFM + Self-Train)** | **54.4** |
-
-Δ over WeCLIP+: **+2.5pp**. Δ over WeCLIP: **+7.3pp**.
-
-Training progression: iter 60k 51.92 → 70k 52.93 → 80k 53.07 → final eval 54.36.
-
-Full logs: [`results/training.log`](./results/training.log), [`results/eval.log`](./results/eval.log).
+The implementation builds on [WeCLIP+ (Zhang et al., TPAMI 2025)](https://github.com/zbf1991/WeCLIP), the journal extension of the CVPR 2024 WeCLIP work.
 
 ## Repository layout
 
-```
-WeCLIP_Plus/                # WeCLIP+ base models + attention-affinity variants
-  PAR.py, segformer_head.py, model_attn_aff_*.py, Decoder/
-
-clip/                       # CLIP library + tooling
-datasets/                   # COCO / VOC loaders
-configs/                    # YAML training configs (coco_*, voc_*)
-utils/                      # AverageMeter, camutils, dcrf, evaluate, imutils, losses, optimizer
-scripts/                    # WeCLIP+ training scripts + designed variants
-test_msc_flip_coco.py       # COCO evaluation
-test_msc_flip_voc.py        # VOC evaluation
-test_msc_flip_seg.py        # generic segmentation eval
-environment.yaml            # conda env
+```text
+WeCLIP_Plus/                # WeCLIP+ models, decoders, and attention-affinity variants
+clip/                       # CLIP library and CAM tooling
+datasets/                   # COCO and VOC loaders
+configs/                    # Training and evaluation configurations
+scripts/                    # Distributed training paths and designed variants
+utils/                      # Losses, optimization, evaluation, and image utilities
+test_msc_flip_coco.py       # COCO multi-scale and flip evaluation
+test_msc_flip_voc.py        # VOC multi-scale and flip evaluation
+environment.yaml            # Conda environment
 ```
 
-## Quick Start
+## Quick start
 
 ```bash
 conda env create -f environment.yaml
 conda activate weclip-plus
 
-# WeCLIP+ baseline training (COCO)
+# Train the public WeCLIP+ integration on COCO
 python scripts/dist_clip_coco.py --config configs/coco_attn_reg.yaml
 
-# Evaluation
+# Evaluate a checkpoint
 python test_msc_flip_coco.py --config configs/coco_attn_reg.yaml --weights <path>
 ```
 
-## Repository note
+## Public repository scope
 
-This repo provides the WeCLIP+ baseline integration, model architecture, configs, evaluation pipeline, and designed-variant scripts. **Two core methods — the RFM (Region Feature Matching) refinement step and the disagreement-aware self-training loop — are intentionally not included in this public release.** Their algorithms are described in the accompanying paper; release is pending the paper's preprint.
-
-`configs/coco_rfm_ts.yaml` and `configs/coco_selftrain.yaml` show the hyperparameter structure but the corresponding scripts/modules (`scripts/dist_rfm_ts.py`, `scripts/dist_clip_selftrain_disagree.py`, `scripts/rfm_disagree.py`, `WeCLIP_Plus/model_rfm_ts_coco.py`) are withheld.
+This repository contains the baseline integration, model structure, configurations, evaluation paths, and designed-variant scripts. Contracted training data, trained checkpoints, and the final refinement implementation are not included in the public release.
 
 ## License
 
